@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ztp_game.Sprites
+{
+    public class Thorn: Sprite
+    {
+        private Direction direction;
+
+        public void FlipTexture()
+        {
+
+        }
+    }
+
+}
