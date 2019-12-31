@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ztp_game.States;
 
 namespace ztp_game
 {
@@ -16,6 +17,15 @@ namespace ztp_game
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+
+        private State _currentState;
+        private State _nextState;
+
+
+        public void ChangeState(State state)
+        {
+            _nextState = state;
         }
 
         /// <summary>
