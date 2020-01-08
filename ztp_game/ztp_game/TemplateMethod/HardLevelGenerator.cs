@@ -98,6 +98,10 @@ namespace ztp_game.TemplateMethod
             return buffer;
         }
 
+        public override char[,] CreateBorder(int height, int width)
+        {
+            throw new NotImplementedException();
+        }
 
         public override char[,] CreateCoins(int height, int width)
         {

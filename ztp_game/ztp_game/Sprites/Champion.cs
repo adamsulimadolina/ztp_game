@@ -16,28 +16,9 @@ namespace ztp_game.Sprites
         private Direction direction;
         private InputManager inputManager;
         //private List<Observer> observersList;
-        public int points
-        {
-            get
-            {
-                return points;
-            }
-            set
-            {
-                points = value;
-            }
-        }
-        public int health
-        {
-            get
-            {
-                return health;
-            }
-            set
-            {
-                health = value;
-            }
-        }
+        public int points = 0;
+
+        public int health = 3;
 
         public int level = 0;
         //{

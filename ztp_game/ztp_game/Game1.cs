@@ -41,7 +41,7 @@ namespace ztp_game
             graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
             graphics.ApplyChanges();
-            _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
+            _currentState = new GameState(this, graphics.GraphicsDevice, Content);
 
             ChangeState(_currentState);
             base.Initialize();
