@@ -39,21 +39,22 @@ namespace ztp_game.Sprites
             }
         }
 
-        public int level
-        {
-            get
-            {
-                return level;
-            }
-            set
-            {
-                level = value;
-            }
-        }
+        public int level = 0;
+        //{
+        //    get
+        //    {
+        //        //return level;
+        //    }
+        //    set
+        //    {
+        //        //level = value;
+        //    }
+        //}
 
         private Champion()
         {
             inputManager = new InputManager();
+            level = 0;
             //dodanie tekstury
         }
         public static Champion GetInstance()

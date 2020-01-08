@@ -14,7 +14,7 @@ namespace ztp_game.TemplateMethod
         protected char[,] level_array { get; set; }
         protected IBoardBuilder board_builder { get; set; }
 
-        protected List<BlocksList> blockList;
+        protected List<BlocksList> blockList = new List<BlocksList>();
 
         public SpriteCollection GetLevel() { return new SpriteCollection(); }
 
@@ -22,6 +22,7 @@ namespace ztp_game.TemplateMethod
 
         public void CreateLevelLogic(int height, int width)
         {
+            this.level_array = new char[height, width];
             this.level_array = CreateBlocks(height, width);
             this.level_array = CreateThorns(height, width);
             this.level_array = CreateGaps(height, width);

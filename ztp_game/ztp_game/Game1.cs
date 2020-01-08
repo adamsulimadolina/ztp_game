@@ -37,7 +37,8 @@ namespace ztp_game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            IsMouseVisible = true;
+            ChangeState(new GameState(this, graphics.GraphicsDevice, Content));
             base.Initialize();
         }
 
@@ -84,6 +85,7 @@ namespace ztp_game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _currentState.Draw(gameTime, spriteBatch);
 
             // TODO: Add your drawing code here
 

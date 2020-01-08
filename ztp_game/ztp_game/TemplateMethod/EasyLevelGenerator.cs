@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using ztp_game.Auxiliary_Classes;
 using ztp_game.Builder;
 using ztp_game.Collection;
+using ztp_game.Sprites;
 
 namespace ztp_game.TemplateMethod
 {
     class EasyLevelGenerator : AbstractLevelGenerator
     {
-        public char[,] level_array { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IBoardBuilder board_builder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IBoardBuilder board_builder;
 
         public override char[,] CreateBlocks(int height, int width)
         {
@@ -34,7 +34,7 @@ namespace ztp_game.TemplateMethod
                 else
                 {
                     double_block = rnd.Next(0, 100);
-                    if (double_block % 2 == 0 && Screen.getLevel() > 5) //tutaj musi byc level z Championa
+                    if (double_block % 2 == 0 && Champion.GetInstance().level > 5) //tutaj musi byc level z Championa
                     {
                         direction = 2;
                         tmp_helper = rnd.Next(4, height - 4);
@@ -122,106 +122,108 @@ namespace ztp_game.TemplateMethod
 
         public override char[,] CreateExit(int height, int width)
         {
-            throw new NotImplementedException();
+            return this.level_array;
         }
 
-        public override char[,] CreateGaps(int height, int width)
-        {
-            Random rnd = new Random();
-            int length = 0;
-            int isGapRoll = 0;
-            int j = 1;
-            bool isGap = false;
-            bool wasGap = false;
-            char[,] buffer = this.level_array;
+        //public override char[,] CreateGaps(int height, int width)
+        //{
+        //    Random rnd = new Random();
+        //    int length = 0;
+        //    int isGapRoll = 0;
+        //    int j = 1;
+        //    bool isGap = false;
+        //    bool wasGap = false;
+        //    char[,] buffer = this.level_array;
 
-            foreach (BlocksList b in this.blockList) //sprite lista
-            {
+        //    foreach (BlocksList b in this.blockList) //sprite lista
+        //    {
 
-                while (j < b.getStartX() - 1)
-                {
-                    isGapRoll = rnd.Next(1, 100);
+        //        while (j < b.getStartX() - 1)
+        //        {
+        //            isGapRoll = rnd.Next(1, 100);
 
-                    length = rnd.Next(2, 5);
+        //            length = rnd.Next(2, 5);
 
-                    if (wasGap == true)
-                    {
-                        j += length;
-                        wasGap = false;
-                        if (b.getStartX() - j < 3) break;
-                    }
-                    else
-                    {
-                        if (isGapRoll < 40) isGap = true;
-
-
-                        if (isGap == true)
-                        {
-                            for (int k = 0; k < length; k++)
-                            {
-                                if (j < b.getStartX()) buffer[0, j] = ' ';
-                                j++;
-                            }
-                            wasGap = true;
-                        }
-                        else
-                        {
-                            j += (length - 1);
-                            wasGap = false;
-                        }
-                    }
-
-                }
-                j = b.getFinishX() + 1;
-            }
-
-            isGap = false;
-            wasGap = false;
-            isGapRoll = 0;
-            j = 5;
-            length = 0;
+        //            if (wasGap == true)
+        //            {
+        //                j += length;
+        //                wasGap = false;
+        //                if (b.getStartX() - j < 3) break;
+        //            }
+        //            else
+        //            {
+        //                if (isGapRoll < 40) isGap = true;
 
 
-            foreach (BlocksList b in this.blockList) //sprite lista
-            {
+        //                if (isGap == true)
+        //                {
+        //                    for (int k = 0; k < length; k++)
+        //                    {
+        //                        if (j < b.getStartX()) buffer[0, j] = ' ';
+        //                        j++;
+        //                    }
+        //                    wasGap = true;
+        //                }
+        //                else
+        //                {
+        //                    j += (length - 1);
+        //                    wasGap = false;
+        //                }
+        //            }
 
-                while (j < b.getStartX() - 1)
-                {
-                    isGapRoll = rnd.Next(1, 100);
+        //        }
+        //        j = b.getFinishX() + 1;
+        //    }
 
-                    length = rnd.Next(2, 5);
+        //    isGap = false;
+        //    wasGap = false;
+        //    isGapRoll = 0;
+        //    j = 5;
+        //    length = 0;
 
-                    if (wasGap == true)
-                    {
-                        j += length;
-                        wasGap = false;
-                        if (b.getStartX() - j < 3) break;
-                    }
-                    else
-                    {
-                        if (isGapRoll < 40) isGap = true;
 
-                        if (isGap == true)
-                        {
-                            for (int k = 0; k < length; k++)
-                            {
-                                if (j < b.getStartX()) buffer[height - 1, j] = ' ';
-                                j++;
-                            }
-                            wasGap = true;
-                        }
-                        else
-                        {
-                            j += (length - 1);
-                            wasGap = false;
-                        }
-                    }
+        //    foreach (BlocksList b in this.blockList) //sprite lista
+        //    {
 
-                }
-                j = b.getFinishX() + 1;
-            }
-            return buffer;
-        }
+        //        while (j < b.getStartX() - 1)
+        //        {
+        //            isGapRoll = rnd.Next(1, 100);
+
+        //            length = rnd.Next(2, 5);
+
+        //            if (wasGap == true)
+        //            {
+        //                j += length;
+        //                wasGap = false;
+        //                if (b.getStartX() - j < 3) break;
+        //            }
+        //            else
+        //            {
+        //                if (isGapRoll < 40) isGap = true;
+
+        //                if (isGap == true)
+        //                {
+        //                    for (int k = 0; k < length; k++)
+        //                    {
+        //                        if (j < b.getStartX()) buffer[height - 1, j] = ' ';
+        //                        j++;
+        //                    }
+        //                    wasGap = true;
+        //                }
+        //                else
+        //                {
+        //                    j += (length - 1);
+        //                    wasGap = false;
+        //                }
+        //            }
+
+        //        }
+        //        j = b.getFinishX() + 1;
+        //    }
+        //    return buffer;
+        //}
+
+        public override char[,] CreateGaps(int height, int width) { return this.level_array; }
 
         public override char[,] CreateThorns(int height, int width)
         {

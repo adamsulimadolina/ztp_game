@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ztp_game.Logic;
 using ztp_game.Sprites;
+using ztp_game.TemplateMethod;
 
 namespace ztp_game.States
 {
@@ -19,6 +20,8 @@ namespace ztp_game.States
         private Champion _champ;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            AbstractLevelGenerator level = new EasyLevelGenerator();
+            level.CreateLevelLogic(100, 40);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -44,13 +47,13 @@ namespace ztp_game.States
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
-            if (_champ.Health <= 0)
+            if (Champion.GetInstance().health <= 0)
             {
                 Screen.setLevel(1);
-                _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
+                //_game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
                 return;
             }
-            _champ.Update(_sprites);
+            //_champ.Update(_sprites);
             if (Screen.getChange())
             {
                 Screen.ChangeMap(false);
@@ -58,7 +61,7 @@ namespace ztp_game.States
                 Screen.setLevel(Screen.getLevel() + 1);
                 _champ.health = 3;
 
-                _game.ChangeState(new GameState(_game, _graphicsDevice, _content, _champ));
+                _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
 
             }
         }
