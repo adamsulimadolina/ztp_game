@@ -28,6 +28,8 @@ namespace ztp_game.TemplateMethod
             this.level_array = CreateExit(height, width);
             this.level_array = CreateCoins(height, width);
 
+
+
         }
         public abstract char[,] CreateBlocks(int height, int width);
         public abstract char[,] CreateThorns(int height, int width);
