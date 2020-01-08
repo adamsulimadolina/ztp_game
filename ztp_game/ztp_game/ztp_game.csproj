@@ -41,6 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Auxiliary Classes\BlocksList.cs" />
+    <Compile Include="Builder\IBoardBuilder.cs" />
     <Compile Include="Collection\ISpriteCollection.cs" />
     <Compile Include="Collection\SpriteCollection.cs" />
     <Compile Include="Game1.cs" />
@@ -56,6 +58,9 @@
     <Compile Include="Sprites\Door.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\Thorn.cs" />
+    <Compile Include="TemplateMethod\EasyLevelGenerator.cs" />
+    <Compile Include="TemplateMethod\HardLevelGenerator.cs" />
+    <Compile Include="TemplateMethod\ILevelGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
