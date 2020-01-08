@@ -20,8 +20,7 @@ namespace ztp_game.States
         private Champion _champ;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            AbstractLevelGenerator level = new EasyLevelGenerator();
-            level.CreateLevelLogic(100, 40);
+            
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

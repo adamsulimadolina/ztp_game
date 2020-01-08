@@ -38,7 +38,12 @@ namespace ztp_game
         {
             // TODO: Add your initialization logic here
             IsMouseVisible = true;
-            ChangeState(new GameState(this, graphics.GraphicsDevice, Content));
+            graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
+            _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
+
+            ChangeState(_currentState);
             base.Initialize();
         }
 
@@ -70,10 +75,19 @@ namespace ztp_game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
+            if (_nextState != null)
+            {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+
+
+            _currentState.Update(gameTime);
             // TODO: Add your update logic here
+
+
+
 
             base.Update(gameTime);
         }
