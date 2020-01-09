@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,18 @@ using System.Threading.Tasks;
 using ztp_game.Auxiliary_Classes;
 using ztp_game.Builder;
 using ztp_game.Collection;
+using ztp_game.Logic;
 using ztp_game.Sprites;
 
 namespace ztp_game.TemplateMethod
 {
     class EasyLevelGenerator : AbstractLevelGenerator
     {
-        public IBoardBuilder board_builder;
-
+        
+        public EasyLevelGenerator(ContentManager content)
+        {
+            this.content = content;
+        }
         public override char[,] CreateBlocks(int height, int width)
         {
             Random rnd = new Random();
@@ -238,6 +243,26 @@ namespace ztp_game.TemplateMethod
                 this.level_array[height - 1, i] = '/';
             }
             return this.level_array;
+        }
+
+        public override void BuildLevel(int height, int width)
+        {
+            board_builder = new MagmaLevelBuilder(this.content);
+            char sign = ' ';
+            for(int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
+                {
+                    sign = this.level_array[i, j];
+                    if (sign == '/') board_builder.GenerateBorder();
+                    else if (sign == '\u2588') board_builder.GenerateBlock();
+                    board_builder.x += 16;
+                }
+                board_builder.x = 0;
+                board_builder.y += 16;
+            }
+            sprite_collection = board_builder.GetLevel();
+
         }
 
 

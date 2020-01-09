@@ -22,7 +22,7 @@ namespace ztp_game.States
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Components/Font");
-            level_generator = new EasyLevelGenerator();
+            level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
             
@@ -45,10 +45,11 @@ namespace ztp_game.States
             spriteBatch.DrawString(_font, "  Level: " + Screen.getLevel() + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
             spriteBatch.DrawString(_font, "  Health: " + Champion.GetInstance().health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
 
-            //foreach (var sprite in _sprites)
-            //{
-            //    sprite.Draw(spriteBatch);
-            //}
+            foreach (var sprite in level_generator.sprite_collection.GetList())
+            {
+                var sprite_draw = (Sprite)sprite;
+                sprite_draw.Draw(spriteBatch);
+            }
             spriteBatch.End();
         }
 
