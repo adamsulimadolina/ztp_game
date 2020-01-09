@@ -23,6 +23,7 @@ namespace ztp_game.States
         {
             _font = content.Load<SpriteFont>("Components/Font");
 
+
             level_generator = new EasyLevelGenerator(content);
 
             Champion.SetContent(content);
@@ -40,7 +41,7 @@ namespace ztp_game.States
         {
             
             spriteBatch.Begin();
-            Champion.GetInstance().Draw(spriteBatch);
+            
             //_champ.Draw(spriteBatch);
             //_board.Draw(spriteBatch);
             spriteBatch.DrawString(_font, "Score: " + Champion.GetInstance().points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
@@ -52,6 +53,7 @@ namespace ztp_game.States
                 var sprite_draw = (Sprite)sprite;
                 sprite_draw.Draw(spriteBatch);
             }
+            Champion.GetInstance().Draw(spriteBatch);
             spriteBatch.End();
         }
 

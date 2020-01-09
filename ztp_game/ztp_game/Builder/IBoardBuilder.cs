@@ -25,6 +25,8 @@ namespace ztp_game.Builder
 
         void GenerateDoors(int height, int width);
 
+        void GenerateBackground();
+
         SpriteCollection GetLevel();
     }
 }

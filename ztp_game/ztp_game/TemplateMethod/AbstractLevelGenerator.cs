@@ -8,6 +8,7 @@ using ztp_game.Auxiliary_Classes;
 using ztp_game.Builder;
 using ztp_game.Collection;
 using ztp_game.Logic;
+using ztp_game.Sprites;
 
 namespace ztp_game.TemplateMethod
 {
@@ -43,6 +44,7 @@ namespace ztp_game.TemplateMethod
                 }
                 Console.WriteLine();
             }
+            Champion.GetInstance().SetCollection(sprite_collection);
             
 
         }

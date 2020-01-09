@@ -247,8 +247,9 @@ namespace ztp_game.TemplateMethod
 
         public override void BuildLevel(int height, int width)
         {
-            board_builder = new MagmaLevelBuilder(this.content);
             char sign = ' ';
+            board_builder = new MagmaLevelBuilder(this.content);
+            board_builder.GenerateBackground();
             for(int i = 0; i < height; i++)
             {
                 for(int j = 0; j < width; j++)

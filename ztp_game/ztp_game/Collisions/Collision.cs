@@ -84,6 +84,35 @@ namespace ztp_game.Collisions
             _spriteIterator.First();
         }
 
+        public void CollisionBorder()
+        {
+            Champion champion = Champion.GetInstance();
+            while (!_spriteIterator.IsDone)
+            {
+                var border = _spriteIterator.Next<Border>();
+                if (border != null)
+                {
+                    if (champion.Velocity.X > 0 && champion.IsTouchingLeft(border))
+                    {
+                        champion.Velocity.X = border.Rectangle.Left - champion.Rectangle.Right;
+                    }
+                    if (champion.Velocity.X < 0 && champion.IsTouchingRight(border))
+                    {
+                        champion.Velocity.X = border.Rectangle.Right - champion.Rectangle.Left;
+                    }
+                    if (champion.Velocity.Y > 0 && champion.IsTouchingTop(border))
+                    {
+                        champion.Velocity.Y = border.Rectangle.Top - champion.Rectangle.Bottom;
+                    }
+                    if (champion.Velocity.Y < 0 && champion.IsTouchingBottom(border))
+                    {
+                        champion.Velocity.Y = border.Rectangle.Bottom - champion.Rectangle.Top;
+                    }
+                }
+            }
+            _spriteIterator.First();
+        }
+
         public void CollisionCoin()
         {
             Champion champion = Champion.GetInstance();

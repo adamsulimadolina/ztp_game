@@ -9,7 +9,7 @@ using ztp_game.Sprites;
 
 namespace ztp_game.Collection
 {
-    class SpriteCollection : ISpriteCollection
+    public class SpriteCollection : ISpriteCollection
     {
         private ArrayList _items = new ArrayList();
 

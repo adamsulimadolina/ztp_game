@@ -67,9 +67,20 @@ namespace ztp_game.Builder
             throw new NotImplementedException();
         }
 
+        public void GenerateBackground()
+        {
+            Sprite background = new Background();
+            background._texture = content.Load<Texture2D>("MagmaLevel/Background");
+            background.Position.X = 0;
+            background.Position.Y = 0;
+            sprite_collection.AddSprite(background);
+        }
+
         public SpriteCollection GetLevel()
         {
             return sprite_collection;
         }
+
+
     }
 }
