@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using ztp_game.Input;
 using ztp_game.States;
 
 namespace ztp_game
@@ -12,11 +14,13 @@ namespace ztp_game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public static InputManager inputManager;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            inputManager = new InputManager();
         }
 
         private State _currentState;
@@ -86,7 +90,7 @@ namespace ztp_game
             _currentState.Update(gameTime);
             // TODO: Add your update logic here
 
-
+            inputManager.Update(gameTime);
 
 
             base.Update(gameTime);

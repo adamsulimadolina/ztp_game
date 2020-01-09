@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using ztp_game.Input;
 using ztp_game.Logic;
 using ztp_game.Collisions;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace ztp_game.Sprites
 {
@@ -18,6 +20,7 @@ namespace ztp_game.Sprites
         private Direction direction;
         private InputManager inputManager;
         private Collision collisions;
+        private ContentManager content;
 
         //private List<Observer> observersList;
         public int points = 0;
@@ -28,14 +31,27 @@ namespace ztp_game.Sprites
 
         private Champion()
         {
-            inputManager = new InputManager();
+            inputManager = Game1.inputManager;
             level = 0;
+            Speed = 2f;
+            SetPositionStart();
+            direction = Direction.Up;
+
             //collions = new Collisions();
-            //dodanie tekstury
+
         }
         public static Champion GetInstance()
         {
             return instance;
+        }
+
+        public static void SetContent(ContentManager content_new)
+        {
+            GetInstance().content = content_new;
+            GetInstance()._texture = GetInstance().content.Load<Texture2D>("Champion/Champ");
+            GetInstance()._texture_flip = GetInstance().content.Load<Texture2D>("Champion/ChampFlip");
+            GetInstance()._texture_normal = GetInstance()._texture;
+            GetInstance().SetPositionStart();
         }
 
         public void ChangeDirection(Direction direction)
@@ -46,11 +62,11 @@ namespace ztp_game.Sprites
         public override void Update()
         {
             Move(); 
-            collisions.CollisionBlock();
-            collisions.CollisionCoin();
-            collisions.CollisionDoor();
-            collisions.CollisionGap();
-            collisions.CollisionThorn();
+            //collisions.CollisionBlock();
+            //collisions.CollisionCoin();
+            //collisions.CollisionDoor();
+            //collisions.CollisionGap();
+            //collisions.CollisionThorn();
             Position += Velocity;
             Velocity = Vector2.Zero;
         }
@@ -58,6 +74,7 @@ namespace ztp_game.Sprites
         private void Move()
         {
             if (inputManager.ActionIsPressed("MoveDown"))
+            //if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (direction != Direction.Down)
                 {
