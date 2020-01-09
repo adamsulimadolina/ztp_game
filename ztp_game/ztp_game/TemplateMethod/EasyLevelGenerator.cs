@@ -256,6 +256,8 @@ namespace ztp_game.TemplateMethod
                     sign = this.level_array[i, j];
                     if (sign == '/') board_builder.GenerateBorder();
                     else if (sign == '\u2588') board_builder.GenerateBlock();
+                    else if (sign == '$') board_builder.GenerateCoin();
+                    board_builder.GenerateDoors(height, width);
                     board_builder.x += 16;
                 }
                 board_builder.x = 0;

@@ -35,6 +35,7 @@ namespace ztp_game.Input
 
         public bool ActionWasJustPressed(string actionName)
         {
+            Console.WriteLine("action was just pressed");
             if (KeyBindings.ContainsKey(actionName))
             {
                 if (CurrentState.IsKeyDown(KeyBindings[actionName]))
@@ -55,7 +56,11 @@ namespace ztp_game.Input
             if (KeyBindings.ContainsKey(actionName))
             {
                 if (CurrentState.IsKeyDown(KeyBindings[actionName]))
+                {
+                    Console.WriteLine(KeyBindings[actionName]);
                     return true;
+
+                }
             }
             else
                 throw new ArgumentException("This action is not definded in Keybindings dictionary");

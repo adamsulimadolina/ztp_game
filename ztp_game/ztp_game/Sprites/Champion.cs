@@ -31,8 +31,13 @@ namespace ztp_game.Sprites
 
         private Champion()
         {
-            inputManager = new InputManager();
+            inputManager = Game1.inputManager;
             level = 0;
+
+            Speed = 2f;
+            SetPositionStart();
+            direction = Direction.Up;
+
 
             //collions = new Collisions();
 
@@ -59,11 +64,11 @@ namespace ztp_game.Sprites
         public override void Update()
         {
             Move(); 
-            collisions.CollisionBlock();
-            collisions.CollisionCoin();
-            collisions.CollisionDoor();
-            collisions.CollisionGap();
-            collisions.CollisionThorn();
+            //collisions.CollisionBlock();
+            //collisions.CollisionCoin();
+            //collisions.CollisionDoor();
+            //collisions.CollisionGap();
+            //collisions.CollisionThorn();
             Position += Velocity;
             Velocity = Vector2.Zero;
         }
@@ -71,6 +76,7 @@ namespace ztp_game.Sprites
         private void Move()
         {
             if (inputManager.ActionIsPressed("MoveDown"))
+            //if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (direction != Direction.Down)
                 {

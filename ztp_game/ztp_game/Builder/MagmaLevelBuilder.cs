@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Collection;
+using ztp_game.Logic;
 using ztp_game.Sprites;
 
 namespace ztp_game.Builder
@@ -45,12 +46,20 @@ namespace ztp_game.Builder
 
         public void GenerateCoin()
         {
-            throw new NotImplementedException();
+            Sprite coin = new Coin();
+            coin._texture = content.Load<Texture2D>("MagmaLevel/Point");
+            coin.Position.X = x;
+            coin.Position.Y = y;
+            sprite_collection.AddSprite(coin);
         }
 
-        public void GenerateDoors()
+        public void GenerateDoors(int height, int width)
         {
-            throw new NotImplementedException();
+            Sprite doors = new Door();
+            doors._texture = content.Load<Texture2D>("MagmaLevel/Exit");
+            doors.Position.X = (width - 3) * 16;
+            doors.Position.Y = (height - 5) * 16;
+            sprite_collection.AddSprite(doors);
         }
 
         public void GenerateThorn()

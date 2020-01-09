@@ -22,7 +22,9 @@ namespace ztp_game.States
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Components/Font");
+
             level_generator = new EasyLevelGenerator(content);
+
             Champion.SetContent(content);
             setLevel();
             
@@ -77,6 +79,8 @@ namespace ztp_game.States
                 _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
 
             }
+            Champion.GetInstance().Update();
+            
         }
 
         public void setLevel()
