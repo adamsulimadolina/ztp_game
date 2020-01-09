@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F2E90996-7B3A-4195-845A-C0003D1DE165}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ztp_game</RootNamespace>
     <AssemblyName>ztp_game</AssemblyName>
@@ -40,11 +40,15 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Auxiliary Classes\BlocksList.cs" />
     <Compile Include="Builder\IBoardBuilder.cs" />
     <Compile Include="Collection\ISpriteCollection.cs" />
     <Compile Include="Collection\SpriteCollection.cs" />
+    <Compile Include="Collisions\Collision.cs" />
     <Compile Include="Components\Background.cs" />
     <Compile Include="Components\Button.cs" />
     <Compile Include="Components\Component.cs" />
@@ -71,7 +75,7 @@
     <Compile Include="States\State.cs" />
     <Compile Include="TemplateMethod\EasyLevelGenerator.cs" />
     <Compile Include="TemplateMethod\HardLevelGenerator.cs" />
-    <Compile Include="TemplateMethod\ILevelGenerator.cs" />
+    <Compile Include="TemplateMethod\AbstractLevelGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

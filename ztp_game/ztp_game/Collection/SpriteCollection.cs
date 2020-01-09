@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Iterator;
+using ztp_game.Sprites;
 
 namespace ztp_game.Collection
 {
@@ -20,6 +21,11 @@ namespace ztp_game.Collection
         public int Count()
         {
             return _items.Count;
+        }
+
+        public void RemoveCoin(Coin coin)
+        {
+            _items.Remove(coin);
         }
 
         public object this[int index]

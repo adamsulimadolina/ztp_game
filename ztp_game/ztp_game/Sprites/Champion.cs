@@ -7,53 +7,30 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Input;
+using ztp_game.Logic;
+using ztp_game.Collisions;
 
 namespace ztp_game.Sprites
 {
-    public class Champion: Sprite
+    public class Champion : Sprite
     {
         private static Champion instance = new Champion();
         private Direction direction;
         private InputManager inputManager;
-        //private List<Observer> observersList;
-        public int points
-        {
-            get
-            {
-                return points;
-            }
-            set
-            {
-                points = value;
-            }
-        }
-        public int health
-        {
-            get
-            {
-                return health;
-            }
-            set
-            {
-                health = value;
-            }
-        }
+        private Collision collisions;
 
-        public int level
-        {
-            get
-            {
-                return level;
-            }
-            set
-            {
-                level = value;
-            }
-        }
+        //private List<Observer> observersList;
+        public int points = 0;
+
+        public int health = 3;
+
+        public int level = 0;
 
         private Champion()
         {
             inputManager = new InputManager();
+            level = 0;
+            //collions = new Collisions();
             //dodanie tekstury
         }
         public static Champion GetInstance()
@@ -68,8 +45,14 @@ namespace ztp_game.Sprites
 
         public override void Update()
         {
-            Move();
-            //Sprawdzanie kolizji
+            Move(); 
+            collisions.CollisionBlock();
+            collisions.CollisionCoin();
+            collisions.CollisionDoor();
+            collisions.CollisionGap();
+            collisions.CollisionThorn();
+            Position += Velocity;
+            Velocity = Vector2.Zero;
         }
 
         private void Move()
@@ -130,7 +113,7 @@ namespace ztp_game.Sprites
             this.points++;
         }
 
-        private void LoseHealth()
+        public void LoseHealth()
         {
             SoundPlayer sound = new SoundPlayer("death.wav");
             SetPositionStart();
@@ -148,17 +131,17 @@ namespace ztp_game.Sprites
             
             //sound.PlayMusic();
         }
-        private void SetPositionStart()
+        public void SetPositionStart()
         {
             if (!specialLevel)
             {
                 Position.X = 16;
-                //Position.Y = (Screen.getHeight() - 3) * 16;
+                Position.Y = (Screen.getHeight() - 3) * 16;
                 this.Velocity = Vector2.Zero;
             }
             else
             {
-                //Position.X = (Screen.getWidth() - 3) * 16;
+                Position.X = (Screen.getWidth() - 3) * 16;
                 Position.Y = 16;
                 this.Velocity = Vector2.Zero;
             }

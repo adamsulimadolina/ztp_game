@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ztp_game.Builder;
 using ztp_game.Collection;
 using ztp_game.Auxiliary_Classes;
+using ztp_game.Sprites;
 
 namespace ztp_game.TemplateMethod
 {
@@ -34,7 +35,7 @@ namespace ztp_game.TemplateMethod
                 else
                 {
                     double_block = rnd.Next(0, 100);
-                    if (double_block % 2 == 0 && Screen.getLevel() > 5) //tutaj musi byc level z Championa
+                    if (double_block % 2 == 0 && Champion.GetInstance().level > 5) //tutaj musi byc level z Championa
                     {
                         direction = 2;
                         tmp_helper = rnd.Next(4, height - 4);
@@ -97,6 +98,10 @@ namespace ztp_game.TemplateMethod
             return buffer;
         }
 
+        public override char[,] CreateBorder(int height, int width)
+        {
+            throw new NotImplementedException();
+        }
 
         public override char[,] CreateCoins(int height, int width)
         {
