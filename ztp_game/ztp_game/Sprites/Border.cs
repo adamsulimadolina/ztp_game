@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ztp_game.Iterator
+namespace ztp_game.Sprites
 {
-    public interface ISpriteIterator
+    public class Border : Sprite
     {
     }
 }

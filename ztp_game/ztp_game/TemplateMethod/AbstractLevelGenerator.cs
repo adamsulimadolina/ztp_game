@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using ztp_game.Auxiliary_Classes;
 using ztp_game.Builder;
 using ztp_game.Collection;
 using ztp_game.Logic;
+using ztp_game.Sprites;
 
 namespace ztp_game.TemplateMethod
 {
@@ -14,12 +16,14 @@ namespace ztp_game.TemplateMethod
     {
         protected char[,] level_array { get; set; }
         protected IBoardBuilder board_builder { get; set; }
+        public ContentManager content;
+        public SpriteCollection sprite_collection;
 
         protected List<BlocksList> blockList = new List<BlocksList>();
 
         public SpriteCollection GetLevel() { return new SpriteCollection(); }
 
-        public void BuildLevel() { }
+        public abstract void BuildLevel(int height, int width);
 
         public void CreateLevelLogic(int height, int width)
         {
@@ -31,6 +35,7 @@ namespace ztp_game.TemplateMethod
             this.level_array = CreateGaps(height, width);
             this.level_array = CreateExit(height, width);
             this.level_array = CreateCoins(height, width);
+            BuildLevel(height, width);
             for(int i = 0; i<height; i++)
             {
                 for(int j=0; j<width; j++)
@@ -39,6 +44,7 @@ namespace ztp_game.TemplateMethod
                 }
                 Console.WriteLine();
             }
+            Champion.GetInstance().SetCollection(sprite_collection);
             
 
         }

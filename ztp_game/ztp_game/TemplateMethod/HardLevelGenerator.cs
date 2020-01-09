@@ -15,6 +15,11 @@ namespace ztp_game.TemplateMethod
         public char[,] level_array { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IBoardBuilder board_builder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public override void BuildLevel(int height, int width)
+        {
+            throw new NotImplementedException();
+        }
+
         public override char[,] CreateBlocks(int height, int width)
         {
             char[,] buffer = new char[height, width];

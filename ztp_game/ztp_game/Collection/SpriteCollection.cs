@@ -9,9 +9,9 @@ using ztp_game.Sprites;
 
 namespace ztp_game.Collection
 {
-    class SpriteCollection : ISpriteCollection
+    public class SpriteCollection : ISpriteCollection
     {
-        private ArrayList _items;
+        private ArrayList _items = new ArrayList();
 
         public ISpriteIterator CreateIterator()
         {
@@ -32,6 +32,16 @@ namespace ztp_game.Collection
         {
             get { return _items[index]; }
             set { _items.Add(value); }
+        }
+
+        public void AddSprite(Sprite sprite)
+        {
+            _items.Add(sprite);
+        }
+
+        public ArrayList GetList()
+        {
+            return _items;
         }
     }
 }

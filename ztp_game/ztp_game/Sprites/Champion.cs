@@ -11,6 +11,7 @@ using ztp_game.Logic;
 using ztp_game.Collisions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using ztp_game.Collection;
 
 namespace ztp_game.Sprites
 {
@@ -21,6 +22,7 @@ namespace ztp_game.Sprites
         private InputManager inputManager;
         private Collision collisions;
         private ContentManager content;
+        private SpriteCollection spriteCollection;
 
         //private List<Observer> observersList;
         public int points = 0;
@@ -33,16 +35,20 @@ namespace ztp_game.Sprites
         {
             inputManager = Game1.inputManager;
             level = 0;
-            Speed = 2f;
+            Speed = 4f;
             SetPositionStart();
             direction = Direction.Up;
 
-            //collions = new Collisions();
 
         }
         public static Champion GetInstance()
         {
             return instance;
+        }
+
+        public void SetCollection(SpriteCollection collection)
+        {
+            spriteCollection = collection;
         }
 
         public static void SetContent(ContentManager content_new)
@@ -61,12 +67,14 @@ namespace ztp_game.Sprites
 
         public override void Update()
         {
-            Move(); 
-            //collisions.CollisionBlock();
-            //collisions.CollisionCoin();
-            //collisions.CollisionDoor();
-            //collisions.CollisionGap();
-            //collisions.CollisionThorn();
+            Move();
+            collisions = new Collision(spriteCollection);
+            collisions.CollisionBlock();
+            collisions.CollisionCoin();
+            collisions.CollisionDoor();
+            collisions.CollisionGap();
+            collisions.CollisionThorn();
+            collisions.CollisionBorder();
             Position += Velocity;
             Velocity = Vector2.Zero;
         }
@@ -74,7 +82,6 @@ namespace ztp_game.Sprites
         private void Move()
         {
             if (inputManager.ActionIsPressed("MoveDown"))
-            //if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (direction != Direction.Down)
                 {

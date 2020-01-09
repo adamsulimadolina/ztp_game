@@ -54,6 +54,7 @@ namespace ztp_game.Sprites
             Position.Y = Y;
         }
 
+
         public virtual void Update()
         {
         }
