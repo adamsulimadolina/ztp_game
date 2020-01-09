@@ -25,18 +25,25 @@ namespace ztp_game.Iterator
             return _sprites[_current] as Sprite;
         }
 
-        public Sprite Next()
+        public T Next<T>() where T: class
         {
             _current += _step;
             if (!IsDone)
-                return _sprites[_current] as Sprite;
-            else
+                if (_sprites[_current] is T)
+                    return (T) _sprites[_current];
+            //else
                 return null;
         }
 
         public Sprite CurrentSprite
         {
             get { return _sprites[_current] as Sprite; }
+        }
+
+        public void RemoveCoin(Coin coin)
+        {
+            _sprites.RemoveCoin(coin);
+            _current--;
         }
 
         public bool IsDone

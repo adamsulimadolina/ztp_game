@@ -48,6 +48,7 @@
     <Compile Include="Builder\IBoardBuilder.cs" />
     <Compile Include="Collection\ISpriteCollection.cs" />
     <Compile Include="Collection\SpriteCollection.cs" />
+    <Compile Include="Collisions\Collision.cs" />
     <Compile Include="Components\Background.cs" />
     <Compile Include="Components\Button.cs" />
     <Compile Include="Components\Component.cs" />
