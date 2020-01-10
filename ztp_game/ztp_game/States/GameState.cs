@@ -18,7 +18,7 @@ namespace ztp_game.States
         private List<Sprite> _sprites;
         private SpriteFont _font;
         private Champion _champ;
-        private AbstractLevelGenerator level_generator;
+        private static AbstractLevelGenerator level_generator;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Components/Font");
@@ -85,9 +85,9 @@ namespace ztp_game.States
             
         }
 
-        public void setLevel()
+        public static void setLevel()
         {
-            this.level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
+            level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
         }
     }
 }

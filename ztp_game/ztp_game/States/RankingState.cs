@@ -32,7 +32,7 @@ namespace ztp_game.States
                 Text = "Go to main menu"
             };
 
-            backButton.Click += backButton_Click;
+            backButton.OnClick += backButton_Click;
 
             _components = new List<Component>()
             {

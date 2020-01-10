@@ -33,7 +33,7 @@ namespace ztp_game.Sprites
 
         private Champion()
         {
-            inputManager = Game1.inputManager;
+            inputManager = InputManager.GetInstance();
             level = 0;
 
             Speed = 4f;

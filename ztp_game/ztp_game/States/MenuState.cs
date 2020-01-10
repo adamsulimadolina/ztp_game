@@ -13,10 +13,11 @@ namespace ztp_game.States
     class MenuState : State
     {
         private List<Component> _components;
+        private NavigationMenu navigationMenu;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            
+
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
@@ -26,14 +27,13 @@ namespace ztp_game.States
                 Position = new Vector2(0, 0)
             };
 
-
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(550, 340),
                 Text = "New Game",
             };
 
-            newGameButton.Click += NewGameButton_Click;
+            newGameButton.OnClick += NewGameButton_Click;
 
             var rankingButton = new Button(buttonTexture, buttonFont)
             {
@@ -41,7 +41,7 @@ namespace ztp_game.States
                 Text = "Ranking",
             };
 
-            rankingButton.Click += RankingButton_Click;
+            rankingButton.OnClick += RankingButton_Click;
 
             var creditsButton = new Button(buttonTexture, buttonFont)
             {
@@ -49,7 +49,7 @@ namespace ztp_game.States
                 Text = "Credits",
             };
 
-            creditsButton.Click += CreditsButton_Click;
+            creditsButton.OnClick += CreditsButton_Click;
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
@@ -57,15 +57,24 @@ namespace ztp_game.States
                 Text = "Exit",
             };
 
-            exitButton.Click += ExitButton_Click;
+            exitButton.OnClick += ExitButton_Click;
+
+            navigationMenu = new NavigationMenu(new List<Button>
+            {
+                newGameButton,
+                rankingButton,
+                creditsButton,
+                exitButton
+            });
 
             _components = new List<Component>()
             {
                 background,
-                newGameButton,
-                rankingButton,
-                creditsButton,
-                exitButton,
+                navigationMenu
+                //newGameButton,
+                //rankingButton,
+                //creditsButton,
+                //exitButton,
             };
         }
 
@@ -86,8 +95,7 @@ namespace ztp_game.States
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
-        {
-           
+        {       
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
 

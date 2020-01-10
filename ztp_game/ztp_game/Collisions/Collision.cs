@@ -8,6 +8,7 @@ using ztp_game.Collection;
 using ztp_game.Iterator;
 using ztp_game.Logic;
 using ztp_game.Sprites;
+using ztp_game.States;
 
 namespace ztp_game.Collisions
 {
@@ -48,7 +49,7 @@ namespace ztp_game.Collisions
                     if (champion.Rectangle.Intersects(door.Rectangle))
                     {
                         champion.SetPositionStart();
-                        //Przejście na kolejny poziom
+                        GameState.setLevel();
                     }
                 }
             }
@@ -135,7 +136,7 @@ namespace ztp_game.Collisions
         public void CollisionGap()
         {
             Champion champion = Champion.GetInstance();
-            if (champion.Position.Y <= 0 || champion.Position.Y >= (Screen.getHeight() - 2) * 16)
+            if (champion.Position.Y <= -1 || champion.Position.Y >= (Screen.getHeight() - 1) * 16)
             {
                 champion.LoseHealth();
             }

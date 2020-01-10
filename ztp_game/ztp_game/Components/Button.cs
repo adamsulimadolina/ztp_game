@@ -7,54 +7,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Components;
+using ztp_game.Input;
 
 namespace ztp_game.States
 {
     class Button : Component
     {
-        #region Fields
-
-        private MouseState _currentMouse;
-
         private SpriteFont _font;
 
-        private bool _isHovering;
+        private bool selected;
 
-        private MouseState _previousMouse;
+        private InputManager inputManager;
 
-        private Texture2D _texture;
-
-        #endregion
-
-        #region Properties
-
-        public event EventHandler Click;
-
-        public bool Clicked { get; private set; }
+        public EventHandler OnClick { get; set; }
+        public bool Selected
+        {
+            get => selected;
+            set
+            {
+                if (selected == value)
+                    return;
+                else
+                {
+                    selected = value;
+                    OnSelectedChange?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+        public EventHandler OnSelectedChange { get; set; }
 
         public Color PenColour { get; set; }
 
-        public Vector2 Position { get; set; }
-
-        public Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
-            }
-        }
-
         public string Text { get; set; }
-
-        #endregion
-
-        #region Methods
 
         public Button(Texture2D texture, SpriteFont font)
         {
             _texture = texture;
 
             _font = font;
+
+            inputManager = InputManager.GetInstance();
 
         }
 
@@ -64,7 +56,7 @@ namespace ztp_game.States
 
             PenColour = Color.White;
 
-            if (_isHovering)
+            if (Selected)
             {
                 PenColour = Color.Red;
                 colour = Color.Red;
@@ -83,24 +75,13 @@ namespace ztp_game.States
 
         public override void Update(GameTime gameTime)
         {
-            _previousMouse = _currentMouse;
-            _currentMouse = Mouse.GetState();
-
-            var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
-
-            _isHovering = false;
-
-            if (mouseRectangle.Intersects(Rectangle))
+            if (Selected)
             {
-                _isHovering = true;
-
-                if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
+                if (inputManager.ActionWasJustPressed("Accept"))
                 {
-                    Click?.Invoke(this, new EventArgs());
+                    OnClick?.Invoke(this, new EventArgs());
                 }
             }
         }
-
-        #endregion
     }
 }
