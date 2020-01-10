@@ -12,9 +12,10 @@ namespace ztp_game.Input
     {
         public KeyboardState CurrentState;
         public KeyboardState PreviousState;
+        private static InputManager instance = new InputManager();
         public Dictionary<string, Keys> KeyBindings { get; private set; }
 
-        public InputManager()
+        private InputManager()
         {
             KeyBindings = new Dictionary<string, Keys>
             {
@@ -27,6 +28,11 @@ namespace ztp_game.Input
             };
         }
 
+        public static InputManager GetInstance()
+        {
+            return instance;
+        }
+
         public void Update(GameTime gameTime)
         {
             PreviousState = CurrentState;
@@ -35,7 +41,6 @@ namespace ztp_game.Input
 
         public bool ActionWasJustPressed(string actionName)
         {
-            Console.WriteLine("action was just pressed");
             if (KeyBindings.ContainsKey(actionName))
             {
                 if (CurrentState.IsKeyDown(KeyBindings[actionName]))
@@ -57,9 +62,7 @@ namespace ztp_game.Input
             {
                 if (CurrentState.IsKeyDown(KeyBindings[actionName]))
                 {
-                    Console.WriteLine(KeyBindings[actionName]);
                     return true;
-
                 }
             }
             else

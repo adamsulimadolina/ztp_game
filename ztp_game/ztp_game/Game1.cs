@@ -14,13 +14,13 @@ namespace ztp_game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public static InputManager inputManager;
+        InputManager inputManager;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            inputManager = new InputManager();
+            inputManager = InputManager.GetInstance();
         }
 
         private State _currentState;
@@ -41,11 +41,12 @@ namespace ztp_game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            IsMouseVisible = true;
+            //IsMouseVisible = false;
+            
             graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
             graphics.ApplyChanges();
-            _currentState = new GameState(this, graphics.GraphicsDevice, Content);
+            _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
 
             ChangeState(_currentState);
             base.Initialize();

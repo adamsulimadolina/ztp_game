@@ -135,7 +135,7 @@ namespace ztp_game.Collisions
         public void CollisionGap()
         {
             Champion champion = Champion.GetInstance();
-            if (champion.Position.Y <= 0 || champion.Position.Y >= (Screen.getHeight() - 2) * 16)
+            if (champion.Position.Y <= -1 || champion.Position.Y >= (Screen.getHeight() - 1) * 16)
             {
                 champion.LoseHealth();
             }
