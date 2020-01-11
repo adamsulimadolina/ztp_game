@@ -7,22 +7,44 @@ using ztp_game.Builder;
 using ztp_game.Collection;
 using ztp_game.Auxiliary_Classes;
 using ztp_game.Sprites;
+using Microsoft.Xna.Framework.Content;
 
 namespace ztp_game.TemplateMethod
 {
     class HardLevelGenerator : AbstractLevelGenerator
     {
-        public char[,] level_array { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IBoardBuilder board_builder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        public HardLevelGenerator(ContentManager content)
+        {
+            this.content = content;
+        }
         public override void BuildLevel(int height, int width)
         {
-            throw new NotImplementedException();
+            char sign = ' ';
+            board_builder = new MagmaLevelBuilder(this.content);
+            board_builder.GenerateBackground();
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    sign = this.level_array[i, j];
+                    if (sign == 'b') board_builder.GenerateBorder();
+                    else if (sign == '\u2588') board_builder.GenerateBlock();
+                    else if (sign == '$') board_builder.GenerateCoin();
+                    else if (sign == '/') board_builder.GenerateLeftThorn();
+                    else if (sign == '?') board_builder.GenerateRightThorn();
+                    else if (sign == '#') board_builder.GenerateThorn();
+                    board_builder.GenerateDoors(height, width);
+                    board_builder.x += 16;
+                }
+                board_builder.x = 0;
+                board_builder.y += 16;
+            }
+            sprite_collection = board_builder.GetLevel();
         }
 
         public override char[,] CreateBlocks(int height, int width)
         {
-            char[,] buffer = new char[height, width];
+            char[,] buffer = this.level_array;
             Random rnd = new Random();
             List<bool> blockDirection = new List<bool> { true, false };
             int tmp_number = rnd.Next(6, width / 4);
@@ -105,12 +127,21 @@ namespace ztp_game.TemplateMethod
 
         public override char[,] CreateBorder(int height, int width)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < height; i++)
+            {
+                this.level_array[i, 0] = 'b';
+                this.level_array[i, width - 1] = 'b';
+            }
+            for (int i = 0; i < width; i++)
+            {
+                this.level_array[0, i] = 'b';
+                this.level_array[height - 1, i] = 'b';
+            }
+            return this.level_array;
         }
 
         public override char[,] CreateCoins(int height, int width)
         {
-            char[,] buffer = this.level_array;
             Random rnd = new Random();
 
             int numOfPoints = rnd.Next(5, 10);
@@ -118,21 +149,15 @@ namespace ztp_game.TemplateMethod
             int rndHeight = 0;
             for (int i = 0; i < numOfPoints; i++)
             {
-                while (buffer[rndHeight, rndWidth] != ' ')
+                while (this.level_array[rndHeight, rndWidth] != ' ')
                 {
                     rndHeight = rnd.Next(2, height - 2);
                     rndWidth = rnd.Next(4, width - 5);
                 }
-                buffer[rndHeight, rndWidth] = '$';
+                this.level_array[rndHeight, rndWidth] = '$';
             }
 
-            return buffer;
-        }
-
-
-        public override char[,] CreateExit(int height, int width)
-        {
-            throw new NotImplementedException();
+            return this.level_array;
         }
 
         public override char[,] CreateGaps(int height, int width)
@@ -235,7 +260,101 @@ namespace ztp_game.TemplateMethod
 
         public override char[,] CreateThorns(int height, int width)
         {
-            return this.level_array;
+            Random rnd = new Random();
+            char[,] buffer = this.level_array;
+            foreach (BlocksList b in blockList)
+            {
+                
+                int torn_sets_number = rnd.Next(1, 6);
+                int torn_number = 0;
+                int position = 0;
+                int starting_block = 0;
+                if (torn_sets_number >= 1 && b.getDirection() != BlocksList.direction_full && Champion.GetInstance().level >= 0)
+                {
+                    torn_number = rnd.Next(1, b.getWidth());
+                    if (b.getDirection() == BlocksList.direction_down) position = height - b.getHeight();
+                    else if (b.getDirection() == BlocksList.direction_up) position = b.getHeight();
+                    starting_block = rnd.Next(b.getStartX(), b.getFinishX() - (b.getWidth() / 2));
+                    for (int i = starting_block; i < starting_block + torn_number && i < b.getFinishX(); i++)
+                    {
+                        if (b.getDirection() == BlocksList.direction_down) buffer[position, i] = '#';
+                        else buffer[position, i] = '&';
+                    }
+
+                }
+
+                if (torn_sets_number >= 2 && b.getDirection() != BlocksList.direction_full && Champion.GetInstance().level >= 3)
+                {
+
+                    torn_number = rnd.Next(3, b.getHeight());
+                    position = b.getStartX() - 1;
+                    if (b.getDirection() == BlocksList.direction_down)
+                    {
+                        starting_block = rnd.Next(height - b.getHeight() + 1, height - 2);
+                        for (int i = starting_block; i < starting_block + torn_number && i < height - 2; i++)
+                        {
+                            buffer[i, position] = '/';
+                        }
+                    }
+                    else
+                    {
+                        starting_block = rnd.Next(1, b.getHeight());
+                        for (int i = starting_block; i < starting_block + torn_number && i < b.getHeight(); i++)
+                        {
+                            buffer[i, position] = '/';
+                        }
+                    }
+                }
+
+                if (torn_sets_number == 3 && b.getDirection() != BlocksList.direction_full && Champion.GetInstance().level >= 6)
+                {
+                    torn_number = rnd.Next(3, b.getHeight());
+                    position = b.getFinishX();
+                    if (b.getDirection() == BlocksList.direction_down)
+                    {
+                        starting_block = rnd.Next(height - b.getHeight() + 1, height - 2);
+                        for (int i = starting_block; i < starting_block + torn_number && i < height - 2; i++)
+                        {
+                            buffer[i, position] = '?';
+                        }
+                    }
+                    else
+                    {
+                        starting_block = rnd.Next(1, b.getHeight());
+                        for (int i = starting_block; i < starting_block + torn_number && i < b.getHeight(); i++)
+                        {
+                            buffer[i, position] = '?';
+                        }
+                    }
+                }
+
+                if (b.getDirection() == BlocksList.direction_full && Champion.GetInstance().level > 10)
+                {
+
+                    starting_block = rnd.Next(1, height / 2);
+                    torn_number = rnd.Next(1, height - 2);
+                    int sides = rnd.Next(0, 4);
+                    if (sides == 0)
+                    {
+                        position = b.getStartX() - 1;
+                        for (int i = starting_block; i < starting_block + torn_number && i < height - 2; i++)
+                        {
+                            if (buffer[i, position + 1] != ' ') buffer[i, position] = '/';
+                            else break;
+                        }
+                    }
+                    else
+                    {
+                        position = b.getFinishX();
+                        for (int i = starting_block; i < starting_block + torn_number && i < height - 2; i++)
+                        {
+                            if (buffer[i, position - 1] != ' ') buffer[i, position] = '?';
+                            else break;
+                        }
+                    }
+                }
+            }
+            return buffer;
         }
 
 

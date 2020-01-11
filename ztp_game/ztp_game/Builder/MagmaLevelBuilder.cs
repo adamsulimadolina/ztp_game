@@ -62,9 +62,31 @@ namespace ztp_game.Builder
             sprite_collection.AddSprite(doors);
         }
 
+        public void GenerateLeftThorn()
+        {
+            Sprite thorn = new Thorn();
+            thorn._texture = content.Load<Texture2D>("MagmaLevel/TornLeft");
+            thorn.Position.X = x;
+            thorn.Position.Y = y;
+            sprite_collection.AddSprite(thorn);
+        }
+
+        public void GenerateRightThorn()
+        {
+            Sprite thorn = new Thorn();
+            thorn._texture = content.Load<Texture2D>("MagmaLevel/TornRight");
+            thorn.Position.X = x;
+            thorn.Position.Y = y;
+            sprite_collection.AddSprite(thorn);
+        }
+
         public void GenerateThorn()
         {
-            throw new NotImplementedException();
+            Sprite thorn = new Thorn();
+            thorn._texture = content.Load<Texture2D>("MagmaLevel/Torn");
+            thorn.Position.X = x;
+            thorn.Position.Y = y;
+            sprite_collection.AddSprite(thorn);
         }
 
         public void GenerateBackground()

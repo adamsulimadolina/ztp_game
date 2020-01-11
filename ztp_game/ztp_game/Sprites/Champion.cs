@@ -29,12 +29,12 @@ namespace ztp_game.Sprites
 
         public int health = 3;
 
-        public int level = 0;
+        public int level;
 
         private Champion()
         {
             inputManager = InputManager.GetInstance();
-            level = 0;
+            level = 1;
 
             Speed = 4f;
             SetPositionStart();
