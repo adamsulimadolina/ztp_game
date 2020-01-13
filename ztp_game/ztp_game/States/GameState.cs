@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ztp_game.Logic;
+using ztp_game.Memento;
 using ztp_game.Sprites;
 using ztp_game.TemplateMethod;
 
@@ -22,13 +23,24 @@ namespace ztp_game.States
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Components/Font");
-
-
+            _champ = Champion.GetInstance();
             level_generator = new EasyLevelGenerator(content);
-
             Champion.SetContent(content);
             setLevel();
             
+        }
+
+        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, SaveMemento save) : base(game, graphicsDevice, content)
+        {
+            _font = content.Load<SpriteFont>("Components/Font");
+            _champ = Champion.GetInstance();
+            level_generator = new EasyLevelGenerator(content);
+            Champion.SetContent(content);
+            level_generator.level_array = save.GetLevelArray();
+            _champ.points = save.GetPoints();
+            _champ.level = save.GetLevel();
+            _champ.health = save.GetHealth();
+            level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
         }
 
         public override void Initialize()
@@ -61,6 +73,7 @@ namespace ztp_game.States
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health));
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }

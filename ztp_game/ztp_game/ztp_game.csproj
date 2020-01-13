@@ -59,6 +59,8 @@
     <Compile Include="Iterator\ISpriteIterator.cs" />
     <Compile Include="Iterator\SpriteIterator.cs" />
     <Compile Include="Logic\Screen.cs" />
+    <Compile Include="Memento\SaveCaretaker.cs" />
+    <Compile Include="Memento\SaveMemento.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\Background.cs" />

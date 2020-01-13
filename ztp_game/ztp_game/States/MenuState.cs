@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,11 +30,19 @@ namespace ztp_game.States
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 340),
+                Position = new Vector2(550, 280),
                 Text = "New Game",
             };
 
             newGameButton.OnClick += NewGameButton_Click;
+
+            var loadGameButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(550, 340),
+                Text = "Load game"
+            };
+
+            loadGameButton.OnClick += LoadGameButton_Click;
 
             var rankingButton = new Button(buttonTexture, buttonFont)
             {
@@ -59,23 +68,42 @@ namespace ztp_game.States
 
             exitButton.OnClick += ExitButton_Click;
 
-            navigationMenu = new NavigationMenu(new List<Button>
-            {
-                newGameButton,
-                rankingButton,
-                creditsButton,
-                exitButton
-            });
+            
 
-            _components = new List<Component>()
+            if (File.Exists("Save"))
             {
-                background,
-                navigationMenu
-                //newGameButton,
-                //rankingButton,
-                //creditsButton,
-                //exitButton,
-            };
+                navigationMenu = new NavigationMenu(new List<Button>
+                {
+                    newGameButton,
+                    loadGameButton,
+                    rankingButton,
+                    creditsButton,
+                    exitButton,
+                });
+                _components = new List<Component>()
+                {
+                    background,
+                    navigationMenu
+                };
+
+            }
+            else
+            {
+                navigationMenu = new NavigationMenu(new List<Button>
+                {
+                    newGameButton,
+                    rankingButton,
+                    creditsButton,
+                    exitButton
+                });
+                _components = new List<Component>()
+                {
+                    background,
+                    navigationMenu,
+                    loadGameButton
+                };
+            }
+            
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -97,6 +125,11 @@ namespace ztp_game.States
         private void NewGameButton_Click(object sender, EventArgs e)
         {       
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+        }
+
+        private void LoadGameButton_Click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, saveCaretaker.GetMemento()));
         }
 
         private void RankingButton_Click(object sender, EventArgs e)

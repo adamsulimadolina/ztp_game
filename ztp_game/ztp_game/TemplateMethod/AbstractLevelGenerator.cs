@@ -14,7 +14,7 @@ namespace ztp_game.TemplateMethod
 {
     abstract class AbstractLevelGenerator
     {
-        protected char[,] level_array { get; set; }
+        public char[,] level_array { get; set; }
         protected IBoardBuilder board_builder { get; set; }
         public ContentManager content;
         public SpriteCollection sprite_collection;
