@@ -15,34 +15,6 @@ namespace ztp_game.Memento
 
         public SaveCaretaker()
         {
-
-        }
-
-        public void AddMemento(SaveMemento memento)
-        {
-            //zapis do pliku
-            using (FileStream stream = new FileStream("Save", FileMode.Create))
-            {
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
-                    var levelArray = memento.GetLevelArray();
-                    for (int i = 0; i < levelArray.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < levelArray.GetLength(1); j++)
-                        {
-                            writer.Write(levelArray[i, j]);
-                        }
-                    }
-                    writer.Write(memento.GetPoints());
-                    writer.Write(memento.GetHealth());
-                    writer.Write(memento.GetLevel());
-                    writer.Close();
-                }
-            }
-        }
-
-        public SaveMemento GetMemento()
-        {
             SaveMemento fileData;
             //pobranie z pliku
             using (FileStream stream = new FileStream("Save", FileMode.Open))
@@ -64,7 +36,36 @@ namespace ztp_game.Memento
                     fileData = new SaveMemento(levelArray, points, level, health);
                 }
             }
-            return memento = fileData;
+            memento = fileData;
+        }
+
+        public void AddMemento(SaveMemento memento)
+        {
+            //zapis do pliku
+            using (FileStream stream = new FileStream("Save", FileMode.Create))
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    var levelArray = memento.GetLevelArray();
+                    for (int i = 0; i < levelArray.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < levelArray.GetLength(1); j++)
+                        {
+                            writer.Write(levelArray[i, j]);
+                        }
+                    }
+                    writer.Write(memento.GetPoints());
+                    writer.Write(memento.GetHealth());
+                    writer.Write(memento.GetLevel());
+                    writer.Close();
+                    this.memento = memento;
+                }
+            }
+        }
+
+        public SaveMemento GetMemento()
+        {
+            return memento;
         }
 
     }
