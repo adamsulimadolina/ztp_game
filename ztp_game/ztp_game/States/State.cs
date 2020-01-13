@@ -26,7 +26,6 @@ namespace ztp_game.States
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public abstract void Initialize();
 
         public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
         {

@@ -116,9 +116,5 @@ namespace ztp_game.States
             //sound.StopMusic();
             _game.Exit();
         }
-        public override void Initialize()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

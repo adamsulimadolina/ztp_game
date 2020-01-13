@@ -30,7 +30,6 @@ namespace ztp_game.States
             
         }
 
-        public override void Initialize() { }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -62,7 +61,7 @@ namespace ztp_game.States
             if (Champion.GetInstance().health <= 0)
             {
                 _champ.level = 1;
-                //_game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
+                //_game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
                 return;
             }
             //_champ.Update(_sprites);

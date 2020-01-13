@@ -53,7 +53,13 @@ namespace ztp_game.TemplateMethod
 
         public abstract char[,] CreateCoins(int height, int width);
         public abstract char[,] CreateBorder(int height, int width);
-        
+
+        public int PickColorToBuild()
+        {
+            Random rnd = new Random();
+            int number = rnd.Next(1, 2);
+            return number;
+        }
         private void FillArray()
         {
             for (int i = 0; i < Screen.getHeight(); i++)
