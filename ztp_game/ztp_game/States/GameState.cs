@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace ztp_game.States
         private static AbstractLevelGenerator level_generator;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            saveCaretaker.RemoveSave();
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
             _champ.ResetValues();
-            level_generator = new HardLevelGenerator(content);
+            level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
             
@@ -40,6 +42,12 @@ namespace ztp_game.States
             _champ.points = save.GetPoints();
             _champ.level = save.GetLevel();
             _champ.health = save.GetHealth();
+            _champ.Velocity = save.GetVelocity();
+            _champ.Position = save.GetPosition();
+            if (_champ.Velocity.Y < 0)
+                _champ.ChangeDirection(Direction.Up);
+            else
+                _champ.ChangeDirection(Direction.Down);
             level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
         }
         public override void Initialize() { }
@@ -68,14 +76,15 @@ namespace ztp_game.States
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health));
+                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position));
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
             if (Champion.GetInstance().health <= 0)
             {
                 _champ.level = 1;
-                //_game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
+                saveCaretaker.RemoveSave();
+                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
             //_champ.Update(_sprites);
@@ -100,7 +109,7 @@ namespace ztp_game.States
         }
 
 
-        public static void RemovelCoinFromArray(int height, int width)
+        public static void RemoveCoinFromArray(int height, int width)
         {
             level_generator.level_array[height, width] = ' ';
         }

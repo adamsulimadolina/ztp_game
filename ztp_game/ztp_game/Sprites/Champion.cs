@@ -64,10 +64,16 @@ namespace ztp_game.Sprites
         public void ChangeDirection(Direction direction)
         {
             this.direction = direction;
+            if (direction == Direction.Down)
+                _texture = _texture_normal;
+            else
+                _texture = _texture_flip;
         }
 
         public override void Update()
         {
+            Position += Velocity;
+            Velocity = Vector2.Zero;
             Move();
             collisions = new Collision(spriteCollection);
             collisions.CollisionBlock();
@@ -76,8 +82,6 @@ namespace ztp_game.Sprites
             collisions.CollisionGap();
             collisions.CollisionThorn();
             collisions.CollisionBorder();
-            Position += Velocity;
-            Velocity = Vector2.Zero;
         }
 
         private void Move()

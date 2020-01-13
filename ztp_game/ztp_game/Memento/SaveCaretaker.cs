@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,26 +18,33 @@ namespace ztp_game.Memento
         {
             SaveMemento fileData;
             //pobranie z pliku
-            using (FileStream stream = new FileStream("Save", FileMode.Open))
+            if (File.Exists("Save"))
             {
-                using (BinaryReader reader = new BinaryReader(stream))
+                using (FileStream stream = new FileStream("Save", FileMode.Open))
                 {
-                    char[,] levelArray = new char[Screen.getHeight(), Screen.getWidth()];
-                    for (int i = 0; i < levelArray.GetLength(0); i++)
+                    using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        for (int j = 0; j < levelArray.GetLength(1); j++)
+                        char[,] levelArray = new char[Screen.getHeight(), Screen.getWidth()];
+                        for (int i = 0; i < levelArray.GetLength(0); i++)
                         {
-                            levelArray[i, j] = reader.ReadChar();
+                            for (int j = 0; j < levelArray.GetLength(1); j++)
+                            {
+                                levelArray[i, j] = reader.ReadChar();
+                            }
                         }
+                        int points = reader.ReadInt32();
+                        int health = reader.ReadInt32();
+                        int level = reader.ReadInt32();
+                        int velocityx = reader.ReadInt32();
+                        int velocityy = reader.ReadInt32();
+                        int positionx = reader.ReadInt32();
+                        int positiony = reader.ReadInt32();
+                        reader.Close();
+                        fileData = new SaveMemento(levelArray, points, level, health, new Vector2(velocityx, velocityy), new Vector2(positionx, positiony));
                     }
-                    int points = reader.ReadInt32();
-                    int health = reader.ReadInt32();
-                    int level = reader.ReadInt32();
-                    reader.Close();
-                    fileData = new SaveMemento(levelArray, points, level, health);
                 }
+                memento = fileData;
             }
-            memento = fileData;
         }
 
         public void AddMemento(SaveMemento memento)
@@ -57,6 +65,10 @@ namespace ztp_game.Memento
                     writer.Write(memento.GetPoints());
                     writer.Write(memento.GetHealth());
                     writer.Write(memento.GetLevel());
+                    writer.Write(memento.GetVelocity().X);
+                    writer.Write(memento.GetVelocity().Y);
+                    writer.Write(memento.GetPosition().X);
+                    writer.Write(memento.GetPosition().Y);
                     writer.Close();
                     this.memento = memento;
                 }
@@ -66,6 +78,14 @@ namespace ztp_game.Memento
         public SaveMemento GetMemento()
         {
             return memento;
+        }
+
+        public void RemoveSave()
+        {
+            if (File.Exists("Save"))
+            {
+                File.Delete("Save");
+            }
         }
 
     }
