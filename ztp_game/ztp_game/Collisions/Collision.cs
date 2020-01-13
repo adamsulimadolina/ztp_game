@@ -49,6 +49,9 @@ namespace ztp_game.Collisions
                     if (champion.Rectangle.Intersects(door.Rectangle))
                     {
                         champion.SetPositionStart();
+                        champion.points += 30;
+                        champion.level++;
+                        champion.health = 3;
                         GameState.setLevel();
                     }
                 }
@@ -126,6 +129,7 @@ namespace ztp_game.Collisions
                     var rect = new Rectangle(tmp_coin.X, tmp_coin.Y, 1, 1);
                     if (champion.Rectangle.Intersects(rect))
                     {
+                        champion.points += 10;
                         _spriteIterator.RemoveCoin(coin);
                         GameState.RemovelCoinFromArray(coin.Rectangle.Y / 16, coin.Rectangle.X / 16);
                     }

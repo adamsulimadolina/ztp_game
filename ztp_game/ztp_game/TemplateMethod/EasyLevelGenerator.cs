@@ -18,6 +18,7 @@ namespace ztp_game.TemplateMethod
         public EasyLevelGenerator(ContentManager content)
         {
             this.content = content;
+            this.blockList = new List<BlocksList>();
         }
         public override char[,] CreateBlocks(int height, int width)
         {
@@ -122,11 +123,6 @@ namespace ztp_game.TemplateMethod
             return this.level_array;
         }
 
-
-        public override char[,] CreateExit(int height, int width)
-        {
-            return this.level_array;
-        }
 
         public override char[,] CreateGaps(int height, int width)
         {
@@ -234,13 +230,13 @@ namespace ztp_game.TemplateMethod
         {
             for(int i = 0; i< height; i++)
             {
-                this.level_array[i, 0] = '/';
-                this.level_array[i, width - 1] = '/';
+                this.level_array[i, 0] = 'b';
+                this.level_array[i, width - 1] = 'b';
             }
             for(int i = 0; i < width; i++)
             {
-                this.level_array[0, i] = '/';
-                this.level_array[height - 1, i] = '/';
+                this.level_array[0, i] = 'b';
+                this.level_array[height - 1, i] = 'b';
             }
             return this.level_array;
         }
@@ -256,7 +252,7 @@ namespace ztp_game.TemplateMethod
                 for(int j = 0; j < width; j++)
                 {
                     sign = this.level_array[i, j];
-                    if (sign == '/') board_builder.GenerateBorder();
+                    if (sign == 'b') board_builder.GenerateBorder();
                     else if (sign == '\u2588') board_builder.GenerateBlock();
                     else if (sign == '$') board_builder.GenerateCoin();
                     board_builder.GenerateDoors(height, width);

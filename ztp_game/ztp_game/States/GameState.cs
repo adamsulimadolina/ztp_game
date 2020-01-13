@@ -24,12 +24,12 @@ namespace ztp_game.States
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
             _champ.ResetValues();
-            level_generator = new EasyLevelGenerator(content);
+            level_generator = new HardLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
             
         }
-
+        
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, SaveMemento save) : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Components/Font");
@@ -42,12 +42,7 @@ namespace ztp_game.States
             _champ.health = save.GetHealth();
             level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
         }
-
-        public override void Initialize()
-        {
-            
-            
-        }
+        public override void Initialize() { }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -56,16 +51,16 @@ namespace ztp_game.States
             
             //_champ.Draw(spriteBatch);
             //_board.Draw(spriteBatch);
-            spriteBatch.DrawString(_font, "Score: " + Champion.GetInstance().points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
-            spriteBatch.DrawString(_font, "  Level: " + Screen.getLevel() + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
-            spriteBatch.DrawString(_font, "  Health: " + Champion.GetInstance().health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "Score: " + _champ.points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "  Level: " + _champ.level + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "  Health: " + _champ.health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
 
             foreach (var sprite in level_generator.sprite_collection.GetList())
             {
                 var sprite_draw = (Sprite)sprite;
                 sprite_draw.Draw(spriteBatch);
             }
-            Champion.GetInstance().Draw(spriteBatch);
+            _champ.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -79,7 +74,7 @@ namespace ztp_game.States
             }
             if (Champion.GetInstance().health <= 0)
             {
-                Screen.setLevel(1);
+                _champ.level = 1;
                 //_game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
                 return;
             }
@@ -100,8 +95,10 @@ namespace ztp_game.States
 
         public static void setLevel()
         {
+            level_generator.ResetBlocksList();
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
         }
+
 
         public static void RemovelCoinFromArray(int height, int width)
         {

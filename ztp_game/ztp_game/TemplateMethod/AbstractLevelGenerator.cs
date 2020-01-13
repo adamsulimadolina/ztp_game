@@ -33,7 +33,6 @@ namespace ztp_game.TemplateMethod
             this.level_array = CreateBlocks(height, width);
             this.level_array = CreateThorns(height, width);
             this.level_array = CreateGaps(height, width);
-            this.level_array = CreateExit(height, width);
             this.level_array = CreateCoins(height, width);
             BuildLevel(height, width);
             for(int i = 0; i<height; i++)
@@ -51,7 +50,7 @@ namespace ztp_game.TemplateMethod
         public abstract char[,] CreateBlocks(int height, int width);
         public abstract char[,] CreateThorns(int height, int width);
         public abstract char[,] CreateGaps(int height, int width);
-        public abstract char[,] CreateExit(int height, int width);
+
         public abstract char[,] CreateCoins(int height, int width);
         public abstract char[,] CreateBorder(int height, int width);
         
@@ -64,6 +63,11 @@ namespace ztp_game.TemplateMethod
                     this.level_array[i, j] = ' ';
                 }
             }
+        }
+
+        public void ResetBlocksList()
+        {
+            this.blockList = new List<BlocksList>();
         }
     }
 }

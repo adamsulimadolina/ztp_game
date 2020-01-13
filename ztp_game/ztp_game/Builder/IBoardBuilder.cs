@@ -17,6 +17,10 @@ namespace ztp_game.Builder
 
         void GenerateBlock();
 
+        void GenerateLeftThorn();
+
+        void GenerateRightThorn();
+
         void GenerateThorn();
 
         void GenerateCoin();
