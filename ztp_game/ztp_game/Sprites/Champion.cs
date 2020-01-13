@@ -176,5 +176,10 @@ namespace ztp_game.Sprites
             }
         }
 
+        public Direction GetDirection()
+        {
+            return direction;
+        }
+
     }
 }

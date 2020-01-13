@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Collection;
+using ztp_game.Sprites;
 
 namespace ztp_game.Memento
 {
@@ -16,8 +17,9 @@ namespace ztp_game.Memento
         private int health;
         private Vector2 velocity;
         private Vector2 position;
+        private Direction direction;
 
-        public SaveMemento(char[,] levelArray, int points, int level, int health, Vector2 velocity, Vector2 position)
+        public SaveMemento(char[,] levelArray, int points, int level, int health, Vector2 velocity, Vector2 position, Direction direction)
         {
             this.levelArray = levelArray;
             this.points = points;
@@ -25,6 +27,7 @@ namespace ztp_game.Memento
             this.health = health;
             this.velocity = velocity;
             this.position = position;
+            this.direction = direction;
         }
 
         public char[,] GetLevelArray()
@@ -55,6 +58,11 @@ namespace ztp_game.Memento
         public Vector2 GetPosition()
         {
             return position;
+        }
+
+        public Direction GetDirection()
+        {
+            return direction;
         }
 
     }
