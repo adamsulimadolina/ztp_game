@@ -243,6 +243,7 @@ namespace ztp_game.TemplateMethod
 
         public override void BuildLevel(int height, int width)
         {
+            Champion.GetInstance().SetCollection(sprite_collection);
             char sign = ' ';
             int pick = PickColorToBuild();
             board_builder = new MagmaLevelBuilder(this.content);
@@ -263,6 +264,7 @@ namespace ztp_game.TemplateMethod
                 board_builder.y += 16;
             }
             sprite_collection = board_builder.GetLevel();
+            Champion.GetInstance().SetCollection(sprite_collection);
 
         }
 

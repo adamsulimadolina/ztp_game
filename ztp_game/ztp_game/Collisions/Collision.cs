@@ -134,6 +134,7 @@ namespace ztp_game.Collisions
                     {
                         champion.points += 10;
                         _spriteIterator.RemoveCoin(coin);
+                        GameState.RemoveCoinFromArray(coin.Rectangle.Y / 16, coin.Rectangle.X / 16);
                     }
                 }
             }
