@@ -16,7 +16,6 @@ namespace ztp_game.States
 {
     class GameState : State
     {
-        private List<Sprite> _sprites;
         private SpriteFont _font;
         private Champion _champ;
         private static AbstractLevelGenerator level_generator;
@@ -24,6 +23,7 @@ namespace ztp_game.States
         {
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
+            _champ.ResetValues();
             level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
@@ -101,6 +101,11 @@ namespace ztp_game.States
         public static void setLevel()
         {
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
+        }
+
+        public static void RemovelCoinFromArray(int height, int width)
+        {
+            level_generator.level_array[height, width] = ' ';
         }
     }
 }

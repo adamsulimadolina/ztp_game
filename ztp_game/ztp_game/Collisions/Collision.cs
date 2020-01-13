@@ -127,6 +127,7 @@ namespace ztp_game.Collisions
                     if (champion.Rectangle.Intersects(rect))
                     {
                         _spriteIterator.RemoveCoin(coin);
+                        GameState.RemovelCoinFromArray(coin.Rectangle.Y / 16, coin.Rectangle.X / 16);
                     }
                 }
             }
