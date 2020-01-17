@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ztp_game.Iterator
 {
-    interface ISpriteIterator
+    public interface ISpriteIterator
     {
     }
 }

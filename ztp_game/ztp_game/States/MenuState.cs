@@ -7,24 +7,27 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ztp_game.Components;
+using ztp_game.Strategy;
 
 namespace ztp_game.States
 {
     class MenuState : State
     {
         private List<Component> _components;
+        private NavigationMenu navigationMenu;
+        public SoundManager soundManager;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            var buttonFont = _content.Load<SpriteFont>("Fonts/Font");
-            var backgroundTexture = _content.Load<Texture2D>("Controls/background");
+
+            var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            var buttonFont = _content.Load<SpriteFont>("Components/Font");
+            var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
             var background = new Background(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
-
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
@@ -32,7 +35,9 @@ namespace ztp_game.States
                 Text = "New Game",
             };
 
-            newGameButton.Click += NewGameButton_Click;
+            newGameButton.OnClick += NewGameButton_Click;
+
+            
 
             var rankingButton = new Button(buttonTexture, buttonFont)
             {
@@ -40,32 +45,50 @@ namespace ztp_game.States
                 Text = "Ranking",
             };
 
-            rankingButton.Click += RankingButton_Click;
+            rankingButton.OnClick += RankingButton_Click;
+
+            var optionsButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(550, 460),
+                Text = "Options",
+            };
+
+            optionsButton.OnClick += OptionsButton_Click;
 
             var creditsButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 460),
+                Position = new Vector2(550, 520),
                 Text = "Credits",
             };
 
-            creditsButton.Click += CreditsButton_Click;
+            creditsButton.OnClick += CreditsButton_Click;
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 520),
+                Position = new Vector2(550, 580),
                 Text = "Exit",
             };
 
-            exitButton.Click += ExitButton_Click;
+            exitButton.OnClick += ExitButton_Click;
+
+            navigationMenu = new NavigationMenu(new List<Button>
+            {
+                newGameButton,
+                rankingButton,
+                optionsButton,
+                creditsButton,
+                exitButton
+            });
 
             _components = new List<Component>()
             {
                 background,
-                newGameButton,
-                rankingButton,
-                creditsButton,
-                exitButton,
+                navigationMenu
             };
+
+            soundManager = new SoundManager(_content);
+            soundManager.LoadFiles();
+            soundManager.PlaySong("menu");
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -85,8 +108,7 @@ namespace ztp_game.States
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
-        {
-           
+        {       
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
 
@@ -94,6 +116,10 @@ namespace ztp_game.States
         {
             //sound.StopMusic();
             _game.ChangeState(new RankingState(_game, _graphicsDevice, _content));
+        }
+        private void OptionsButton_Click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new OptionsState(_game, _graphicsDevice, _content));
         }
 
         private void CreditsButton_Click(object sender, EventArgs e)
@@ -106,6 +132,10 @@ namespace ztp_game.States
         {
             //sound.StopMusic();
             _game.Exit();
+        }
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,25 @@ namespace ztp_game.Builder
     interface IBoardBuilder
     {
         SpriteCollection sprite_collection { get; set; }
+        int x { get; set; }
+        int y { get; set; }
+        ContentManager content { get; set; }
 
         void GenerateBlock();
 
+        void GenerateLeftThorn();
+
+        void GenerateRightThorn();
+
         void GenerateThorn();
+
+        void GenerateCoin();
+
+        void GenerateBorder();
+
+        void GenerateDoors(int height, int width);
+
+        void GenerateBackground();
 
         SpriteCollection GetLevel();
     }

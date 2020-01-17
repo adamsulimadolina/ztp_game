@@ -26,5 +26,10 @@ namespace ztp_game.States
         {
             throw new NotImplementedException();
         }
+
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

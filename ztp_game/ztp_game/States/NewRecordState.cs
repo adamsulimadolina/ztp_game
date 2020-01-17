@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ztp_game.Components;
+using ztp_game.Sprites;
 
 namespace ztp_game.States
 {
@@ -41,32 +42,16 @@ namespace ztp_game.States
                 Text = "Go to main menu"
             };
 
-            backButton.Click += backButton_Click;
-            submitButton.Click += submitButton_Click;
+            backButton.OnClick += backButton_Click;
+            submitButton.OnClick += submitButton_Click;
 
             //wczytanie wyników list=RankingFile.getPlacements();
 
-            if (list.Count < 10 || list[list.Count - 1].score < champ.Points)
-            {
-                _components = new List<Component>()
-                {
-                    submitButton
-                };
-                isNewRekord = true;
-            }
-            else
-            {
-                _components = new List<Component>()
-                {
-                    backButton
-                };
-                isNewRekord = false;
-            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            string points = "Great job! You got " + champ.Points + " points!";
+            string points = "Great job! You got " + champ.points + " points!";
             string signature = "Please enter your three letter signature: ";
 
             Vector2 vector1 = new Vector2(625, 270);
@@ -102,11 +87,11 @@ namespace ztp_game.States
         {
             if (!HasThreeCharacters(name))
             {
-                _game.ChangeState(new NewRekordState(_game, _graphicsDevice, _content, champ, name));
+                _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
             }
             else
             {
-                RankingFile.AddToList(name, champ.Points);
+               // RankingFile.AddToList(name, champ.Points);
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             }
         }
@@ -200,6 +185,11 @@ namespace ztp_game.States
                 return true;
             else
                 return false;
+        }
+
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
         }
     }
 }

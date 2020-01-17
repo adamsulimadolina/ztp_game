@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using ztp_game.Input;
 using ztp_game.States;
 
 namespace ztp_game
@@ -12,11 +14,13 @@ namespace ztp_game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        InputManager inputManager;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            inputManager = InputManager.GetInstance();
         }
 
         private State _currentState;
@@ -37,7 +41,14 @@ namespace ztp_game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            //IsMouseVisible = false;
+            
+            graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
+            _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
 
+            ChangeState(_currentState);
             base.Initialize();
         }
 
@@ -69,10 +80,19 @@ namespace ztp_game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
+            if (_nextState != null)
+            {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+
+
+            _currentState.Update(gameTime);
             // TODO: Add your update logic here
+
+            inputManager.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -83,7 +103,8 @@ namespace ztp_game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+            _currentState.Draw(gameTime, spriteBatch);
 
             // TODO: Add your drawing code here
 

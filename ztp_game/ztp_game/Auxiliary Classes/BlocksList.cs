@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ztp_game.Logic;
 
 namespace ztp_game.Auxiliary_Classes
 {
@@ -57,5 +58,4 @@ namespace ztp_game.Auxiliary_Classes
         }
 
     }
-}
 }

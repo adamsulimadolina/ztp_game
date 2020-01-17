@@ -32,7 +32,7 @@ namespace ztp_game.States
                 Text = "Go to main menu"
             };
 
-            backButton.Click += backButton_Click;
+            backButton.OnClick += backButton_Click;
 
             _components = new List<Component>()
             {
@@ -75,6 +75,11 @@ namespace ztp_game.States
         private void backButton_Click(object sender, EventArgs e)
         {
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+        }
+
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
         }
     }
 }

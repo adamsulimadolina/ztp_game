@@ -7,33 +7,57 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using NAudio.Wave;
 using ztp_game.Logic;
+using ztp_game.ObserverTemplate;
+using ztp_game.Sprites;
+using ztp_game.Strategy;
+using ztp_game.TemplateMethod;
 
 namespace ztp_game.States
 {
-    class GameState : State
+    class GameState : State , Observer
     {
         private List<Sprite> _sprites;
         private SpriteFont _font;
         private Champion _champ;
+        private static AbstractLevelGenerator level_generator;
+        private SoundManager soundManager;
+
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            _font = content.Load<SpriteFont>("Components/Font");
+            _champ = Champion.GetInstance();
+            level_generator = new HardLevelGenerator(content);
+
+            Champion.SetContent(content);
+            _champ.SetSoundManagerContent(content);
+            setLevel();
+
+            soundManager = new SoundManager(content);
+            soundManager.LoadFiles();
+            soundManager.PlaySong("gameplay");
+
         }
+
+        public override void Initialize() { }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            
             spriteBatch.Begin();
+            
             //_champ.Draw(spriteBatch);
             //_board.Draw(spriteBatch);
-            spriteBatch.DrawString(_font, "Score: " + _champ.Points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
-            spriteBatch.DrawString(_font, "  Level: " + Screen.getLevel() + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
-            spriteBatch.DrawString(_font, "  Health: " + _champ.Health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "Score: " + _champ.points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "  Level: " + _champ.level + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
+            spriteBatch.DrawString(_font, "  Health: " + _champ.health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
 
-            foreach (var sprite in _sprites)
+            foreach (var sprite in level_generator.sprite_collection.GetList())
             {
-                sprite.Draw(spriteBatch);
+                var sprite_draw = (Sprite)sprite;
+                sprite_draw.Draw(spriteBatch);
             }
+            _champ.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -44,23 +68,37 @@ namespace ztp_game.States
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
-            if (_champ.Health <= 0)
+            if (Champion.GetInstance().health <= 0)
             {
-                Screen.setLevel(1);
-                _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content, _champ));
+                _champ.level = 1;
+                _champ.notifyObservers();
+                _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
                 return;
             }
-            _champ.Update(_sprites);
+            //_champ.Update(_sprites);
             if (Screen.getChange())
             {
                 Screen.ChangeMap(false);
-                _champ.Points += 15;
+                _champ.points += 15;
                 Screen.setLevel(Screen.getLevel() + 1);
-                _champ.Health = 3;
+                _champ.health = 3;
 
-                _game.ChangeState(new GameState(_game, _graphicsDevice, _content, _champ));
+                _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
 
             }
+            Champion.GetInstance().Update();
+            
+        }
+
+        public static void setLevel()
+        {
+            level_generator.ResetBlocksList();
+            level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
+        }
+
+        public void update()
+        {
+            //usunięcie zapisu z memento
         }
     }
 }
