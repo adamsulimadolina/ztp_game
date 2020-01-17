@@ -73,6 +73,17 @@ namespace ztp_game.Sprites
         public void ChangeDirection(Direction direction)
         {
             this.direction = direction;
+
+            if (direction == Direction.Down)
+                _texture = _texture_normal;
+            else
+                _texture = _texture_flip;
+        }
+
+        public Direction GetDirection()
+        {
+            return direction;
+
         }
 
         public override void Update()

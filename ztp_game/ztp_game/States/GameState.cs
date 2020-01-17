@@ -33,7 +33,10 @@ namespace ztp_game.States
             level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
-            
+            soundManager = new SoundManager(content);
+            soundManager.LoadFiles();
+            soundManager.PlaySong("gameplay");
+
         }
 
         
@@ -49,10 +52,7 @@ namespace ztp_game.States
             _champ.health = save.GetHealth();
             _champ.Velocity = save.GetVelocity();
             _champ.Position = save.GetPosition();
-            if (_champ.Velocity.Y < 0)
-                _champ.ChangeDirection(Direction.Up);
-            else
-                _champ.ChangeDirection(Direction.Down);
+            _champ.ChangeDirection(save.GetDirection());
             level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
 
             soundManager = new SoundManager(content);
@@ -87,7 +87,7 @@ namespace ztp_game.States
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position));
+                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection()));
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
