@@ -44,8 +44,6 @@ namespace ztp_game.Sprites
             Speed = 4f;
             SetPositionStart();
             direction = Direction.Down;
-            
-
         }
         public static Champion GetInstance()
         {
@@ -154,7 +152,7 @@ namespace ztp_game.Sprites
             
             SetPositionStart();
             this.health--;
-            soundManager.PlaySound("death");
+            //soundManager.PlaySound("death");
             if (!specialLevel)
             {
                 direction = Direction.Down;
@@ -165,8 +163,6 @@ namespace ztp_game.Sprites
                 direction = Direction.Up;
                 this._texture = _texture_flip;
             }
-            
-            //sound.PlayMusic();
         }
         public void SetPositionStart()
         {
