@@ -133,7 +133,7 @@ namespace ztp_game.Sprites
             }
         }
 
-        private void ResetValues()
+        public void ResetValues()
         {
             health = 3;
             points = 0;

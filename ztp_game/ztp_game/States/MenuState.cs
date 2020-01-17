@@ -82,7 +82,6 @@ namespace ztp_game.States
 
             exitButton.OnClick += ExitButton_Click;
 
-<<<<<<< HEAD
             
 
             if (File.Exists("Save"))
@@ -118,27 +117,11 @@ namespace ztp_game.States
                     loadGameButton
                 };
             }
-            
-=======
-            navigationMenu = new NavigationMenu(new List<Button>
-            {
-                newGameButton,
-                rankingButton,
-                optionsButton,
-                creditsButton,
-                exitButton
-            });
-
-            _components = new List<Component>()
-            {
-                background,
-                navigationMenu
-            };
 
             soundManager = new SoundManager(_content);
             soundManager.LoadFiles();
             soundManager.PlaySong("menu");
->>>>>>> Piotr
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -187,10 +170,6 @@ namespace ztp_game.States
         {
             //sound.StopMusic();
             _game.Exit();
-        }
-        public override void Initialize()
-        {
-            throw new NotImplementedException();
         }
     }
 }
