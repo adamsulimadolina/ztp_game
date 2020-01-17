@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using ztp_game.Memento;
+
 using ztp_game.Sprites;
 
 namespace ztp_game.States
@@ -29,7 +31,6 @@ namespace ztp_game.States
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public abstract void Initialize();
 
         public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
         {
