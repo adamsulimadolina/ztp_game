@@ -77,5 +77,12 @@ namespace ztp_game.States
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
         }
 
+<<<<<<< HEAD
+=======
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> Piotr
     }
 }

@@ -10,16 +10,20 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ztp_game.Logic;
 using ztp_game.Memento;
+using ztp_game.ObserverTemplate;
 using ztp_game.Sprites;
+using ztp_game.Strategy;
 using ztp_game.TemplateMethod;
 
 namespace ztp_game.States
 {
-    class GameState : State
+    class GameState : State , Observer
     {
         private SpriteFont _font;
         private Champion _champ;
         private static AbstractLevelGenerator level_generator;
+        private SoundManager soundManager;
+
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             saveCaretaker.RemoveSave();
@@ -50,9 +54,14 @@ namespace ztp_game.States
             else
                 _champ.ChangeDirection(Direction.Down);
             level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
+
+            soundManager = new SoundManager(content);
+            soundManager.LoadFiles();
+            soundManager.PlaySong("gameplay");
         }
 
 
+    
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -86,8 +95,12 @@ namespace ztp_game.States
             {
                 _champ.level = 1;
 
+
                 saveCaretaker.RemoveSave();
-                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+
+                _champ.notifyObservers();
+                _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
+
                 return;
             }
             //_champ.Update(_sprites);
@@ -112,9 +125,16 @@ namespace ztp_game.States
         }
 
 
+
         public static void RemoveCoinFromArray(int height, int width)
         {
             level_generator.level_array[height, width] = ' ';
+        }
+
+        public void update()
+        {
+            //usunięcie zapisu z memento
+
         }
     }
 }

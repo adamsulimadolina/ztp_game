@@ -14,7 +14,10 @@ namespace ztp_game.TemplateMethod
 {
     abstract class AbstractLevelGenerator
     {
-        public char[,] level_array { get; set; }
+
+
+        protected char[,] level_array { get; set; }
+
         protected IBoardBuilder board_builder { get; set; }
         public ContentManager content;
         public SpriteCollection sprite_collection;
@@ -60,6 +63,7 @@ namespace ztp_game.TemplateMethod
             int number = rnd.Next(1, 2);
             return number;
         }
+
         private void FillArray()
         {
             for (int i = 0; i < Screen.getHeight(); i++)

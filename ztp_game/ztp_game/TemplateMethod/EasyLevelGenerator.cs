@@ -248,6 +248,7 @@ namespace ztp_game.TemplateMethod
             int pick = PickColorToBuild();
             board_builder = new MagmaLevelBuilder(this.content);
             if(pick == 1) board_builder = new IceLevelBuilder(this.content);
+
             board_builder.GenerateBackground();
             for(int i = 0; i < height; i++)
             {
@@ -264,9 +265,11 @@ namespace ztp_game.TemplateMethod
                 board_builder.y += 16;
             }
             sprite_collection = board_builder.GetLevel();
+
             Champion.GetInstance().SetCollection(sprite_collection);
 
         }
+
 
     }
 

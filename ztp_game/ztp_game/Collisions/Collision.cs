@@ -78,12 +78,16 @@ namespace ztp_game.Collisions
                     if (champion.Velocity.Y > 0 && champion.IsTouchingTop(block))
                     {
                         champion.Velocity.Y = block.Rectangle.Top - champion.Rectangle.Bottom;
+
                         if (block.level_type == Block.LevelType.Magma) champion.LoseHealth();
+
                     }
                     if (champion.Velocity.Y < 0 && champion.IsTouchingBottom(block))
                     {
                         champion.Velocity.Y = block.Rectangle.Bottom - champion.Rectangle.Top;
+
                         if (block.level_type == Block.LevelType.Magma) champion.LoseHealth();
+
 
                     }
                 }
@@ -135,6 +139,7 @@ namespace ztp_game.Collisions
                         champion.points += 10;
                         _spriteIterator.RemoveCoin(coin);
                         GameState.RemoveCoinFromArray(coin.Rectangle.Y / 16, coin.Rectangle.X / 16);
+
                     }
                 }
             }

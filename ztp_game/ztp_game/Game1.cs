@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using ztp_game.Input;
+
 using ztp_game.Memento;
+
 using ztp_game.States;
 
 namespace ztp_game
@@ -16,7 +18,9 @@ namespace ztp_game
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         InputManager inputManager;
+
         SaveCaretaker saveCaretaker;
+
 
         public Game1()
         {
@@ -24,6 +28,7 @@ namespace ztp_game
             Content.RootDirectory = "Content";
             inputManager = InputManager.GetInstance();
             saveCaretaker = new SaveCaretaker();
+
         }
 
         private State _currentState;

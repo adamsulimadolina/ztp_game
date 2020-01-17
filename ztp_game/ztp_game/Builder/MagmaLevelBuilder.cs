@@ -30,6 +30,7 @@ namespace ztp_game.Builder
         {
             Block block = new Block();
             block.SetType(Block.LevelType.Magma);
+
             block._texture = content.Load<Texture2D>("MagmaLevel/Block");
             block.Position.X = x;
             block.Position.Y = y;
