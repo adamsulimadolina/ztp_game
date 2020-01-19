@@ -19,6 +19,7 @@ namespace ztp_game.States
         private Champion champ;
         private string name;
         private bool isNewRekord;
+        private List<SplitData> placements = RankingFile.getPlacements();
         public static KeyboardState CurrentState;
         public static KeyboardState PreviousState;
 
@@ -27,8 +28,8 @@ namespace ztp_game.States
         {
 
 
-            var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            _font = _content.Load<SpriteFont>("Fonts/Font");
+            var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            _font = _content.Load<SpriteFont>("Components/Font");
 
             var submitButton = new Button(buttonTexture, _font)
             {
@@ -45,7 +46,7 @@ namespace ztp_game.States
             backButton.OnClick += backButton_Click;
             submitButton.OnClick += submitButton_Click;
 
-            //wczytanie wyników list=RankingFile.getPlacements();
+            var list=RankingFile.getPlacements();
 
         }
 
@@ -91,7 +92,8 @@ namespace ztp_game.States
             }
             else
             {
-               // RankingFile.AddToList(name, champ.Points);
+                ////////////////////////PATRZ TU
+                //RankingFile.AddToList(name, champ.Points);
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             }
         }

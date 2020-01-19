@@ -68,6 +68,7 @@
     <Compile Include="ObserverTemplate\Observer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankingFile.cs" />
     <Compile Include="Sprites\Background.cs" />
     <Compile Include="Sprites\Block.cs" />
     <Compile Include="Sprites\Singleton\Champion.cs" />
