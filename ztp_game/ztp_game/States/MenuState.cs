@@ -85,6 +85,7 @@ namespace ztp_game.States
 
             if (File.Exists("Save"))
             {
+                loadGameButton.faded = false;
                 navigationMenu = new NavigationMenu(new List<Component>
                 {
                     newGameButton,
@@ -103,6 +104,7 @@ namespace ztp_game.States
             }
             else
             {
+                loadGameButton.faded = true;
                 navigationMenu = new NavigationMenu(new List<Component>
                 {
                     newGameButton,

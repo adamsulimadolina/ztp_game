@@ -9,6 +9,8 @@ namespace ztp_game.States
     class Button : Component
     {
         private InputManager inputManager;
+        public bool faded;
+        private Color colour;
 
         public Button(Texture2D texture, SpriteFont font)
         {
@@ -22,14 +24,21 @@ namespace ztp_game.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            var colour = Color.White;
-
-            PenColour = Color.White;
-
+            
             if (Selected)
             {
                 PenColour = Color.Red;
                 colour = Color.Red;
+            }
+            else if(faded)
+            {
+                PenColour = Color.DarkSlateGray;
+                colour = Color.DarkSlateGray;
+            }
+            else
+            {
+                colour = Color.White;
+                PenColour = Color.White;
             }
 
             spriteBatch.Draw(_texture, Rectangle, colour);

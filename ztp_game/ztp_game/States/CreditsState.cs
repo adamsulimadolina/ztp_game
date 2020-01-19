@@ -14,12 +14,13 @@ namespace ztp_game.States
     {
         private List<Component> _components;
         private SpriteFont _font;
+        private NavigationMenu navigationMenu;
 
         public CreditsState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            _font = _content.Load<SpriteFont>("Fonts/Font");
-            var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            var backgroundTexture = _content.Load<Texture2D>("Controls/background");
+            _font = _content.Load<SpriteFont>("Components/Font");
+            var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
             var background = new Background(backgroundTexture)
             {
@@ -35,10 +36,14 @@ namespace ztp_game.States
 
             backButton.OnClick += BackButton_Click;
 
+            navigationMenu = new NavigationMenu(new List<Component>
+            {
+                backButton,
+            });
             _components = new List<Component>()
             {
                 background,
-                backButton
+                navigationMenu,
             };
             ;
 
