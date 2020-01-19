@@ -22,7 +22,6 @@ namespace ztp_game.States
         private SpriteFont _font;
         private Champion _champ;
         private static AbstractLevelGenerator level_generator;
-        private SoundManager soundManager;
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
@@ -30,10 +29,13 @@ namespace ztp_game.States
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
             _champ.ResetValues();
+            _champ.SetSoundManagerContent(content);
             level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
             setLevel();
-            
+            _game.PlaySong("gameplay");
+
+
         }
 
         
@@ -43,6 +45,7 @@ namespace ztp_game.States
             _champ = Champion.GetInstance();
             level_generator = new EasyLevelGenerator(content);
             Champion.SetContent(content);
+            _champ.SetSoundManagerContent(content);
             level_generator.level_array = save.GetLevelArray();
             _champ.points = save.GetPoints();
             _champ.level = save.GetLevel();
@@ -51,10 +54,7 @@ namespace ztp_game.States
             _champ.Position = save.GetPosition();
             _champ.ChangeDirection(save.GetDirection());
             level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
-
-            soundManager = new SoundManager(content);
-            soundManager.LoadFiles();
-            soundManager.PlaySong("gameplay");
+            _game.PlaySong("gameplay");
         }
 
 

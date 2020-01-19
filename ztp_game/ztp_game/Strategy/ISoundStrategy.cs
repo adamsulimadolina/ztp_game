@@ -10,5 +10,6 @@ namespace ztp_game.Strategy
     {
         void PlayFile();
         void SetMasterVolume(float volume);
+        float GetMasterVolume();
     }
 }

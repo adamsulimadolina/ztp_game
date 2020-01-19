@@ -17,7 +17,6 @@ namespace ztp_game.States
         private List<Component> _components;
         private NavigationMenu navigationMenu;
 
-        public SoundManager soundManager;
 
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
@@ -86,11 +85,13 @@ namespace ztp_game.States
 
             if (File.Exists("Save"))
             {
-                navigationMenu = new NavigationMenu(new List<Button>
+                loadGameButton.faded = false;
+                navigationMenu = new NavigationMenu(new List<Component>
                 {
                     newGameButton,
                     loadGameButton,
                     rankingButton,
+                    optionsButton,
                     creditsButton,
                     exitButton,
                 });
@@ -99,14 +100,16 @@ namespace ztp_game.States
                     background,
                     navigationMenu
                 };
-
+                _game.PlaySong("menu");
             }
             else
             {
-                navigationMenu = new NavigationMenu(new List<Button>
+                loadGameButton.faded = true;
+                navigationMenu = new NavigationMenu(new List<Component>
                 {
                     newGameButton,
                     rankingButton,
+                    optionsButton,
                     creditsButton,
                     exitButton
                 });
@@ -116,11 +119,12 @@ namespace ztp_game.States
                     navigationMenu,
                     loadGameButton
                 };
+                _game.PlaySong("menu");
             }
 
-            soundManager = new SoundManager(_content);
-            soundManager.LoadFiles();
-            soundManager.PlaySong("menu");
+            //soundManager = new SoundManager(_content);
+            //soundManager.LoadFiles();
+            _game.PlaySong("menu");
 
         }
 

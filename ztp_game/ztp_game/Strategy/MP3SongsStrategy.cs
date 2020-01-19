@@ -19,6 +19,10 @@ namespace ztp_game.Strategy
             currentSong = currentSongPlaying;
             name = songName;
         }
+        public MP3SongsStrategy(List<Song> songFilesList)
+        {
+            songsList = songFilesList;
+        }
 
         public bool IsThisMusicFilePlaying()
         {
@@ -44,6 +48,10 @@ namespace ztp_game.Strategy
         public void SetMasterVolume(float volume)
         {
             MediaPlayer.Volume = volume;
+        }
+        public float GetMasterVolume()
+        {
+            return MediaPlayer.Volume;
         }
     }
 }

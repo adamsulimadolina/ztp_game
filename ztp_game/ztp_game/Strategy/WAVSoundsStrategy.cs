@@ -18,10 +18,13 @@ namespace ztp_game.Strategy
             soundsList = soundFilesList;
             name = soundName;
         }
+        public WAVSoundsStrategy(List<SoundEffect> soundFilesList)
+        {
+            soundsList = soundFilesList;
+        }
 
 
-
-        public void PlayFile()
+            public void PlayFile()
         {
             sound = soundsList.Find(x => x.Name == name);
             sound.CreateInstance().Play();
@@ -30,6 +33,10 @@ namespace ztp_game.Strategy
         public void SetMasterVolume(float volume)
         {
             SoundEffect.MasterVolume = volume;
+        }
+        public float GetMasterVolume()
+        {
+            return SoundEffect.MasterVolume;
         }
     }
 }

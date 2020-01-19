@@ -73,6 +73,7 @@ namespace ztp_game.Sprites
         public void ChangeDirection(Direction direction)
         {
             this.direction = direction;
+
             if (direction == Direction.Down)
                 _texture = _texture_normal;
             else
@@ -82,6 +83,7 @@ namespace ztp_game.Sprites
         public Direction GetDirection()
         {
             return direction;
+
         }
 
         public override void Update()
@@ -161,7 +163,7 @@ namespace ztp_game.Sprites
             
             SetPositionStart();
             this.health--;
-            //soundManager.PlaySound("death");
+            soundManager.PlaySound("death");
             if (!specialLevel)
             {
                 direction = Direction.Down;

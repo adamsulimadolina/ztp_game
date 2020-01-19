@@ -13,54 +13,44 @@ namespace ztp_game.States
     class RankingState : State
     {
         private List<Component> _components;
+        private NavigationMenu navigationMenu;
         private SpriteFont _font;
         public RankingState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            _font = _content.Load<SpriteFont>("Fonts/Font");
-            /*
-            var backgroundTexture = _content.Load<Texture2D>("Controls/background");
+            var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            _font = _content.Load<SpriteFont>("Components/Font");           
+            var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
             var background = new Background(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
-            };*/
+            };
 
             var backButton = new Button(buttonTexture, _font)
             {
                 Position = new Vector2(550, 570),
                 Text = "Go to main menu"
             };
-
             backButton.OnClick += backButton_Click;
 
+            navigationMenu = new NavigationMenu(new List<Component>
+            {
+                backButton,
+            });
             _components = new List<Component>()
             {
-                backButton
+                navigationMenu,
             };
 
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //Wczytywanie pliku (Memento)
-
-            /*var placements = RankingFile.getPlacements();
-            Vector2 vector = new Vector2(780, 55);
-
-            */
+            
             spriteBatch.Begin();
-
-            spriteBatch.DrawString(_font, "Tu będą rankingi", new Vector2(680, 340), Color.White);
 
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
-            /*
-            foreach (var placement in placements)
-            {
-                spriteBatch.DrawString(_font, placement.name + " " + placement.score, vector, Color.White);
-                vector.Y += 50;
-            }
-            */
+            
             spriteBatch.End();
         }
 
