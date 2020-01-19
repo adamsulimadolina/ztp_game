@@ -36,6 +36,7 @@ namespace ztp_game.States
             soundManager = new SoundManager(content);
             soundManager.LoadFiles();
             soundManager.PlaySong("gameplay");
+            _champ.SetSoundManagerContent(content);
 
         }
 
@@ -58,6 +59,7 @@ namespace ztp_game.States
             soundManager = new SoundManager(content);
             soundManager.LoadFiles();
             soundManager.PlaySong("gameplay");
+            _champ.SetSoundManagerContent(content);
         }
 
 

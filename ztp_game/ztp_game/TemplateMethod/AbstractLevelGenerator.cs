@@ -60,7 +60,7 @@ namespace ztp_game.TemplateMethod
         public int PickColorToBuild()
         {
             Random rnd = new Random();
-            int number = rnd.Next(1, 2);
+            int number = rnd.Next(1, 3);
             return number;
         }
 

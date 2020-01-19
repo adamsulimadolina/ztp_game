@@ -163,7 +163,7 @@ namespace ztp_game.Sprites
             
             SetPositionStart();
             this.health--;
-            //soundManager.PlaySound("death");
+            soundManager.PlaySound("death");
             if (!specialLevel)
             {
                 direction = Direction.Down;
