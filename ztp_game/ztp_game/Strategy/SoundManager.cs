@@ -48,8 +48,7 @@ namespace ztp_game.Strategy
             strategy.PlayFile();
         }
         public void SetMusicMasterVolume(float volume)
-        {
-            
+        {            
             strategy = new MP3SongsStrategy(songsList);
             strategy.SetMasterVolume(volume);
         }
@@ -57,6 +56,16 @@ namespace ztp_game.Strategy
         {
             strategy = new WAVSoundsStrategy(soundEffectsList);
             strategy.SetMasterVolume(volume);
+        }
+        public float GetMusicVolume()
+        {
+            strategy = new MP3SongsStrategy(songsList);
+            return strategy.GetMasterVolume();
+        }
+        public float GetSoundVolume()
+        {
+            strategy = new WAVSoundsStrategy(soundEffectsList);
+            return strategy.GetMasterVolume();
         }
     }
 }

@@ -16,22 +16,20 @@ namespace ztp_game.States
         private SpriteFont _font;
         public RankingState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            _font = _content.Load<SpriteFont>("Fonts/Font");
-            /*
-            var backgroundTexture = _content.Load<Texture2D>("Controls/background");
+            var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            _font = _content.Load<SpriteFont>("Components/Font");           
+            var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
             var background = new Background(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
-            };*/
+            };
 
             var backButton = new Button(buttonTexture, _font)
             {
                 Position = new Vector2(550, 570),
                 Text = "Go to main menu"
             };
-
             backButton.OnClick += backButton_Click;
 
             _components = new List<Component>()

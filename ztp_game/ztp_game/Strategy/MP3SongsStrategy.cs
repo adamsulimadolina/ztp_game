@@ -49,5 +49,9 @@ namespace ztp_game.Strategy
         {
             MediaPlayer.Volume = volume;
         }
+        public float GetMasterVolume()
+        {
+            return MediaPlayer.Volume;
+        }
     }
 }

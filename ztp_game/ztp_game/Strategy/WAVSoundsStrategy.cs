@@ -34,5 +34,9 @@ namespace ztp_game.Strategy
         {
             SoundEffect.MasterVolume = volume;
         }
+        public float GetMasterVolume()
+        {
+            return SoundEffect.MasterVolume;
+        }
     }
 }

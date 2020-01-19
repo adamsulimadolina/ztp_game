@@ -28,14 +28,14 @@ namespace ztp_game.States
                 Position = new Vector2(0, 0)
             };
 
-            musicVolumeButton = new AudioButton(buttonTexture, buttonFont, 1.0f)
+            musicVolumeButton = new AudioButton(buttonTexture, buttonFont, _game.GetMusicVolume())
             {
                 Position = new Vector2(550, 340),
                 Text = "Music volume: ",
                 OnClick = ApplyMusicVolume,
             };
 
-            soundVolumeButton = new AudioButton(buttonTexture, buttonFont, 1.0f)
+            soundVolumeButton = new AudioButton(buttonTexture, buttonFont, _game.GetSoundVolume())
             {
                 Position = new Vector2(550, 400),
                 Text = "Sounds volume: ",

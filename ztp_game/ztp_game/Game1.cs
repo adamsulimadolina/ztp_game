@@ -71,6 +71,14 @@ namespace ztp_game
         {
             soundManager.SetSoundMasterVolume(volume);
         }
+        public float GetMusicVolume()
+        {
+            return soundManager.GetMusicVolume();
+        }
+        public float GetSoundVolume()
+        {
+            return soundManager.GetSoundVolume();
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -86,6 +94,8 @@ namespace ztp_game
             graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
             graphics.ApplyChanges();
             LoadAudioFiles();
+            SetMusicMasterVolume(1.0f);
+            SetSoundMasterVolume(1.0f);
             _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
 
             ChangeState(_currentState);
