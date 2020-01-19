@@ -62,10 +62,7 @@ namespace ztp_game.States
             spriteBatch.End();
         }
 
-        public override void Initialize()
-        {
-            
-        }
+
 
         public override void Update(GameTime gameTime)
         {

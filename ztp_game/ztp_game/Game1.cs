@@ -1,9 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using ztp_game.Input;
+
+using ztp_game.Memento;
+
 using ztp_game.States;
+using ztp_game.Strategy;
 
 namespace ztp_game
 {
@@ -16,11 +21,19 @@ namespace ztp_game
         SpriteBatch spriteBatch;
         InputManager inputManager;
 
+        SaveCaretaker saveCaretaker;
+
+        SoundManager soundManager;
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             inputManager = InputManager.GetInstance();
+            saveCaretaker = new SaveCaretaker();
+            soundManager = new SoundManager(Content);
+            MediaPlayer.IsRepeating = true;
         }
 
         private State _currentState;
@@ -32,6 +45,32 @@ namespace ztp_game
             _nextState = state;
         }
 
+        public SaveCaretaker GetSaveCaretaker()
+        {
+            return saveCaretaker;
+        }
+
+
+        public void LoadAudioFiles()
+        {
+            soundManager.LoadFiles();
+        }
+        public void PlaySong(string name)
+        {
+            soundManager.PlaySong(name);
+        }
+        public void PlaySound(string name)
+        {
+            soundManager.PlaySound(name);
+        }
+        public void SetMusicMasterVolume(float volume)
+        {
+            soundManager.SetMusicMasterVolume(volume);
+        }
+        public void SetSoundMasterVolume(float volume)
+        {
+            soundManager.SetSoundMasterVolume(volume);
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -46,6 +85,7 @@ namespace ztp_game
             graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
             graphics.ApplyChanges();
+            LoadAudioFiles();
             _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
 
             ChangeState(_currentState);

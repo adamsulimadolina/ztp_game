@@ -187,9 +187,6 @@ namespace ztp_game.States
                 return false;
         }
 
-        public override void Initialize()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
+

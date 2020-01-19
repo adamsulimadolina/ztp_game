@@ -1,11 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ztp_game.Components;
 using ztp_game.Input;
 
@@ -13,32 +8,7 @@ namespace ztp_game.States
 {
     class Button : Component
     {
-        private SpriteFont _font;
-
-        private bool selected;
-
         private InputManager inputManager;
-
-        public EventHandler OnClick { get; set; }
-        public bool Selected
-        {
-            get => selected;
-            set
-            {
-                if (selected == value)
-                    return;
-                else
-                {
-                    selected = value;
-                    OnSelectedChange?.Invoke(this, new EventArgs());
-                }
-            }
-        }
-        public EventHandler OnSelectedChange { get; set; }
-
-        public Color PenColour { get; set; }
-
-        public string Text { get; set; }
 
         public Button(Texture2D texture, SpriteFont font)
         {

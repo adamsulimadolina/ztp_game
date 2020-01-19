@@ -12,19 +12,16 @@ using ztp_game.Collisions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using ztp_game.Collection;
-using ztp_game.ObserverTemplate;
-using ztp_game.Strategy;
 
 namespace ztp_game.Sprites
 {
-    public class Champion : Sprite , Observable
+    public class Champion : Sprite
     {
         private static Champion instance = new Champion();
         private Direction direction;
         private InputManager inputManager;
         private Collision collisions;
         private ContentManager content;
-        private SoundManager soundManager;
         private SpriteCollection spriteCollection;
 
         //private List<Observer> observersList;
@@ -34,8 +31,6 @@ namespace ztp_game.Sprites
 
         public int level;
 
-        public List<Observer> observers = new List<Observer>();
-
         private Champion()
         {
             inputManager = InputManager.GetInstance();
@@ -44,6 +39,8 @@ namespace ztp_game.Sprites
             Speed = 4f;
             SetPositionStart();
             direction = Direction.Down;
+
+
         }
         public static Champion GetInstance()
         {
@@ -62,32 +59,21 @@ namespace ztp_game.Sprites
             GetInstance()._texture_flip = GetInstance().content.Load<Texture2D>("Champion/ChampFlip");
             GetInstance()._texture_normal = GetInstance()._texture;
             GetInstance().SetPositionStart();
-
-        }
-        public void SetSoundManagerContent(ContentManager content)
-        {
-            soundManager = new SoundManager(content);
-            soundManager.LoadFiles();
         }
 
         public void ChangeDirection(Direction direction)
         {
             this.direction = direction;
-
             if (direction == Direction.Down)
                 _texture = _texture_normal;
             else
                 _texture = _texture_flip;
         }
 
-        public Direction GetDirection()
-        {
-            return direction;
-
-        }
-
         public override void Update()
         {
+            Position += Velocity;
+            Velocity = Vector2.Zero;
             Move();
             collisions = new Collision(spriteCollection);
             collisions.CollisionBlock();
@@ -96,8 +82,6 @@ namespace ztp_game.Sprites
             collisions.CollisionGap();
             collisions.CollisionThorn();
             collisions.CollisionBorder();
-            Position += Velocity;
-            Velocity = Vector2.Zero;
         }
 
         private void Move()
@@ -160,10 +144,9 @@ namespace ztp_game.Sprites
 
         public void LoseHealth()
         {
-            
+            SoundPlayer sound = new SoundPlayer("death.wav");
             SetPositionStart();
             this.health--;
-            soundManager.PlaySound("death");
             if (!specialLevel)
             {
                 direction = Direction.Down;
@@ -174,6 +157,8 @@ namespace ztp_game.Sprites
                 direction = Direction.Up;
                 this._texture = _texture_flip;
             }
+            
+            //sound.PlayMusic();
         }
         public void SetPositionStart()
         {
@@ -191,22 +176,5 @@ namespace ztp_game.Sprites
             }
         }
 
-        public void attach(Observer observer)
-        {
-            observers.Add(observer);
-        }
-
-        public void detach(Observer observer)
-        {
-            observers.Remove(observer);
-        }
-
-        public void notifyObservers()
-        {
-            foreach(var obs in observers)
-            {
-                obs.update();
-            }
-        }
     }
 }

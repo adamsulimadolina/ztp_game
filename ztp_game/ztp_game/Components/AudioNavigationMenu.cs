@@ -6,17 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ztp_game.Input;
-using ztp_game.States;
 
 namespace ztp_game.Components
 {
-    class NavigationMenu: Component
+    class AudioNavigationMenu:Component
     {
-        private List<Component> buttons;
+        private List<AudioButton> buttons;
         private InputManager inputManager;
         protected int currentlySelectedButton = 0;
 
-        public NavigationMenu(List<Component> buttons)
+        public AudioNavigationMenu(List<AudioButton> buttons)
         {
             this.buttons = buttons;
             inputManager = InputManager.GetInstance();

@@ -46,10 +46,13 @@
   <ItemGroup>
     <Compile Include="Auxiliary Classes\BlocksList.cs" />
     <Compile Include="Builder\IBoardBuilder.cs" />
+    <Compile Include="Builder\IceLevelBuilder.cs" />
     <Compile Include="Builder\MagmaLevelBuilder.cs" />
     <Compile Include="Collection\ISpriteCollection.cs" />
     <Compile Include="Collection\SpriteCollection.cs" />
     <Compile Include="Collisions\Collision.cs" />
+    <Compile Include="Components\AudioButton.cs" />
+    <Compile Include="Components\AudioNavigationMenu.cs" />
     <Compile Include="Components\Background.cs" />
     <Compile Include="Components\Button.cs" />
     <Compile Include="Components\Component.cs" />
@@ -59,6 +62,8 @@
     <Compile Include="Iterator\ISpriteIterator.cs" />
     <Compile Include="Iterator\SpriteIterator.cs" />
     <Compile Include="Logic\Screen.cs" />
+    <Compile Include="Memento\SaveCaretaker.cs" />
+    <Compile Include="Memento\SaveMemento.cs" />
     <Compile Include="ObserverTemplate\Observable.cs" />
     <Compile Include="ObserverTemplate\Observer.cs" />
     <Compile Include="Program.cs" />

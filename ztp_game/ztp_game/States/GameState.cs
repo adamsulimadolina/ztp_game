@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ztp_game.Logic;
+using ztp_game.Memento;
 using ztp_game.ObserverTemplate;
 using ztp_game.Sprites;
 using ztp_game.Strategy;
@@ -17,29 +19,46 @@ namespace ztp_game.States
 {
     class GameState : State , Observer
     {
-        private List<Sprite> _sprites;
         private SpriteFont _font;
         private Champion _champ;
         private static AbstractLevelGenerator level_generator;
-        private SoundManager soundManager;
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            saveCaretaker.RemoveSave();
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
-            level_generator = new HardLevelGenerator(content);
-
-            Champion.SetContent(content);
+            _champ.ResetValues();
             _champ.SetSoundManagerContent(content);
+            level_generator = new EasyLevelGenerator(content);
+            Champion.SetContent(content);
             setLevel();
+            _game.PlaySong("gameplay");
 
-            soundManager = new SoundManager(content);
-            soundManager.LoadFiles();
-            soundManager.PlaySong("gameplay");
 
         }
 
-        public override void Initialize() { }
+        
+        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, SaveMemento save) : base(game, graphicsDevice, content)
+        {
+            _font = content.Load<SpriteFont>("Components/Font");
+            _champ = Champion.GetInstance();
+            level_generator = new EasyLevelGenerator(content);
+            Champion.SetContent(content);
+            _champ.SetSoundManagerContent(content);
+            level_generator.level_array = save.GetLevelArray();
+            _champ.points = save.GetPoints();
+            _champ.level = save.GetLevel();
+            _champ.health = save.GetHealth();
+            _champ.Velocity = save.GetVelocity();
+            _champ.Position = save.GetPosition();
+            _champ.ChangeDirection(save.GetDirection());
+            level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
+            _game.PlaySong("gameplay");
+        }
+
+
+    
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -65,14 +84,20 @@ namespace ztp_game.States
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                saveCaretaker.AddMemento(new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection()));
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 return;
             }
             if (Champion.GetInstance().health <= 0)
             {
                 _champ.level = 1;
+
+
+                saveCaretaker.RemoveSave();
+
                 _champ.notifyObservers();
                 _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
+
                 return;
             }
             //_champ.Update(_sprites);
@@ -96,9 +121,17 @@ namespace ztp_game.States
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
         }
 
+
+
+        public static void RemoveCoinFromArray(int height, int width)
+        {
+            level_generator.level_array[height, width] = ' ';
+        }
+
         public void update()
         {
             //usunięcie zapisu z memento
+
         }
     }
 }

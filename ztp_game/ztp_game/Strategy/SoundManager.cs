@@ -38,14 +38,25 @@ namespace ztp_game.Strategy
         public void PlaySong(string name)
         {
             strategy = new MP3SongsStrategy(songsList, name, currentSong);
-            strategy.PlayFile();
             currentSong = songsList.Find(x => x.Name == name);
+            strategy.PlayFile();
         }
 
         public void PlaySound( string name)
         {
             strategy = new WAVSoundsStrategy(soundEffectsList, name);
             strategy.PlayFile();
+        }
+        public void SetMusicMasterVolume(float volume)
+        {
+            
+            strategy = new MP3SongsStrategy(songsList);
+            strategy.SetMasterVolume(volume);
+        }
+        public void SetSoundMasterVolume(float volume)
+        {
+            strategy = new WAVSoundsStrategy(soundEffectsList);
+            strategy.SetMasterVolume(volume);
         }
     }
 }
