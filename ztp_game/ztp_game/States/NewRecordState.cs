@@ -22,14 +22,14 @@ namespace ztp_game.States
         private List<SplitData> placements = RankingFile.getPlacements();
         public static KeyboardState CurrentState;
         public static KeyboardState PreviousState;
+        private NavigationMenu navigationMenu;
 
 
         public NewRecordState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
-
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             _font = _content.Load<SpriteFont>("Components/Font");
+            champ = Champion.GetInstance();
 
             var submitButton = new Button(buttonTexture, _font)
             {
@@ -46,7 +46,25 @@ namespace ztp_game.States
             backButton.OnClick += backButton_Click;
             submitButton.OnClick += submitButton_Click;
 
+            
+
             var list=RankingFile.getPlacements();
+            if (list.Count < 10 || list[list.Count - 1].score < champ.points)
+            {
+                navigationMenu = new NavigationMenu(new List<Component>
+                {
+                   submitButton,
+                });
+                isNewRekord = true;
+            }
+            else
+            {
+                navigationMenu = new NavigationMenu(new List<Component>
+                {
+                   backButton,
+                });
+                isNewRekord = false;
+            }
 
         }
 
@@ -92,8 +110,7 @@ namespace ztp_game.States
             }
             else
             {
-                ////////////////////////PATRZ TU
-                //RankingFile.AddToList(name, champ.Points);
+                RankingFile.AddToList(name, champ.points);
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             }
         }
