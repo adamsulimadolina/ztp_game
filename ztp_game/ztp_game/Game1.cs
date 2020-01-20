@@ -42,7 +42,7 @@ namespace ztp_game
 
         public void ChangeState(State state)
         {
-            if (state is GameState && !(_currentState is GameState))
+            if (state is GameState && _currentState is MenuState)
             {
                 var gameState = state as GameState;
                 gameState.ReadSave(saveCaretaker.GetMemento());

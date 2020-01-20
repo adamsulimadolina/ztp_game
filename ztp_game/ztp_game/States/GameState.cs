@@ -40,6 +40,8 @@ namespace ztp_game.States
                 _champ.ResetValues();
                 setLevel();
             }
+            if (_champ.level == 1)
+                _champ.SetValuesToStandard();
             _game.PlaySong("gameplay");
         }    
 
@@ -79,16 +81,17 @@ namespace ztp_game.States
                 return;
             }
             //_champ.Update(_sprites);
-            if (Screen.getChange())
+            /*if (Screen.getChange())
             {
                 Screen.ChangeMap(false);
                 _champ.points += 15;
                 Screen.setLevel(Screen.getLevel() + 1);
                 _champ.health = 3;
 
+                _champ.ResetValues();
                 _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
 
-            }
+            }*/
             Champion.GetInstance().Update();
             
         }
@@ -109,7 +112,10 @@ namespace ztp_game.States
         public void update()
         {
             //usunięcie zapisu z memento
-
+            if (File.Exists("Save"))
+            {
+                File.Delete("Save");
+            }
         }
 
         public void ReadSave(SaveMemento save)
@@ -117,8 +123,9 @@ namespace ztp_game.States
             if (save != null && !newGame)
             {
                 level_generator.level_array = save.GetLevelArray();
-                _champ.points = save.GetPoints();
                 _champ.level = save.GetLevel();
+                _champ.ResetValues();
+                _champ.points = save.GetPoints();
                 _champ.health = save.GetHealth();
                 _champ.Velocity = save.GetVelocity();
                 _champ.Position = save.GetPosition();

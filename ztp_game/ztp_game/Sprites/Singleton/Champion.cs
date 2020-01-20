@@ -26,6 +26,7 @@ namespace ztp_game.Sprites
         private ContentManager content;
         private SoundManager soundManager;
         private SpriteCollection spriteCollection;
+        private float startingSpeed = 4f;
 
         //private List<Observer> observersList;
         public int points = 0;
@@ -41,7 +42,7 @@ namespace ztp_game.Sprites
             inputManager = InputManager.GetInstance();
             level = 1;
 
-            Speed = 4f;
+            Speed = startingSpeed + level * 2;
             SetPositionStart();
             direction = Direction.Down;
         }
@@ -145,8 +146,17 @@ namespace ztp_game.Sprites
         public void ResetValues()
         {
             health = 3;
+            Speed = startingSpeed + level * 2;
+            SetPositionStart();
+            direction = Direction.Down;
+        }
+
+        public void SetValuesToStandard()
+        {
+            health = 3;
             points = 0;
             level = 1;
+            Speed = startingSpeed + level * 2;
             SetPositionStart();
             direction = Direction.Down;
         }
@@ -163,6 +173,7 @@ namespace ztp_game.Sprites
             
             SetPositionStart();
             this.health--;
+            Speed = startingSpeed + level * 2 ;
             soundManager.PlaySound("death");
             if (!specialLevel)
             {
