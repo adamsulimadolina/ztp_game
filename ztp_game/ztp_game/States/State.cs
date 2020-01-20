@@ -23,7 +23,6 @@ namespace ztp_game.States
 
         protected Game1 _game;
 
-        protected SaveCaretaker saveCaretaker;
 
         #endregion
 
@@ -37,7 +36,6 @@ namespace ztp_game.States
             _game = game;
             _graphicsDevice = graphicsDevice;
             _content = content;
-            saveCaretaker = game.GetSaveCaretaker();
         }
 
         public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, Champion champ)
@@ -45,7 +43,6 @@ namespace ztp_game.States
             _game = game;
             _graphicsDevice = graphicsDevice;
             _content = content;
-            saveCaretaker = game.GetSaveCaretaker();
         }
 
         public abstract void Update(GameTime gameTime);

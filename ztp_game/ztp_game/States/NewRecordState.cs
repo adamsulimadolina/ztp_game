@@ -17,7 +17,8 @@ namespace ztp_game.States
         private List<Component> _components;
         private SpriteFont _font;
         private Champion champ;
-        private string name;
+        private string name; 
+        private NavigationMenu navigationMenu;
         private bool isNewRekord;
         private List<SplitData> placements = RankingFile.getPlacements();
         public static KeyboardState CurrentState;
@@ -26,8 +27,7 @@ namespace ztp_game.States
 
         public NewRecordState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
-
+            champ = Champion.GetInstance();
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             _font = _content.Load<SpriteFont>("Components/Font");
 
@@ -43,15 +43,51 @@ namespace ztp_game.States
                 Text = "Go to main menu"
             };
 
+            _components = new List<Component>();
             backButton.OnClick += backButton_Click;
             submitButton.OnClick += submitButton_Click;
+            navigationMenu = new NavigationMenu(new List<Component>
+            {
+                backButton,
+                submitButton
+            });
+            _components = new List<Component>()
+            {
+                navigationMenu
+            };
 
             var list=RankingFile.getPlacements();
+
+            if (list.Count < 10 || list[list.Count - 1].score < champ.points)
+            {
+                navigationMenu = new NavigationMenu(new List<Component>
+                {
+                    submitButton
+                });
+                _components = new List<Component>()
+                {
+                    navigationMenu
+                };
+                isNewRekord = true;
+            }
+            else
+            {
+                navigationMenu = new NavigationMenu(new List<Component>
+                {
+                    backButton
+                });
+                _components = new List<Component>()
+                {
+                    navigationMenu
+                };
+                isNewRekord = false;
+            }
 
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            champ = Champion.GetInstance();
             string points = "Great job! You got " + champ.points + " points!";
             string signature = "Please enter your three letter signature: ";
 
@@ -93,7 +129,7 @@ namespace ztp_game.States
             else
             {
                 ////////////////////////PATRZ TU
-                //RankingFile.AddToList(name, champ.Points);
+                RankingFile.AddToList(name, champ.points);
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             }
         }

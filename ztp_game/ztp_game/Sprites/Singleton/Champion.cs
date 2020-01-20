@@ -93,9 +93,9 @@ namespace ztp_game.Sprites
             collisions.CollisionBlock();
             collisions.CollisionCoin();
             collisions.CollisionDoor();
-            collisions.CollisionGap();
             collisions.CollisionThorn();
             collisions.CollisionBorder();
+            collisions.CollisionGap();
             Position += Velocity;
             Velocity = Vector2.Zero;
         }

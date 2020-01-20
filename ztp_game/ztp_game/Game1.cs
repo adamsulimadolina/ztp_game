@@ -6,7 +6,7 @@ using System;
 using ztp_game.Input;
 
 using ztp_game.Memento;
-
+using ztp_game.Sprites;
 using ztp_game.States;
 using ztp_game.Strategy;
 
@@ -42,14 +42,18 @@ namespace ztp_game
 
         public void ChangeState(State state)
         {
+            if (state is GameState && !(_currentState is GameState))
+            {
+                var gameState = state as GameState;
+                gameState.ReadSave(saveCaretaker.GetMemento());
+            }
+            if (!(state is GameState) && _currentState is GameState && Champion.GetInstance().health > 0)
+            {
+                var gameState = _currentState as GameState;
+                saveCaretaker.AddMemento(gameState.Save());
+            }
             _nextState = state;
         }
-
-        public SaveCaretaker GetSaveCaretaker()
-        {
-            return saveCaretaker;
-        }
-
 
         public void LoadAudioFiles()
         {

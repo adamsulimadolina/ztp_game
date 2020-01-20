@@ -21,7 +21,7 @@ namespace ztp_game.States
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
+            RankingFile.ReadFromFile();
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
@@ -146,12 +146,12 @@ namespace ztp_game.States
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {       
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
         }
 
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, saveCaretaker.GetMemento()));
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, false));
         }
 
         private void RankingButton_Click(object sender, EventArgs e)

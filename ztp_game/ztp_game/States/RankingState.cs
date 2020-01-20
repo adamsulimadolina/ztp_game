@@ -45,12 +45,20 @@ namespace ztp_game.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
+            var placements = RankingFile.getPlacements();
+            Vector2 vector = new Vector2(780, 55);
+
             spriteBatch.Begin();
 
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
-            
+
+            foreach (var placement in placements)
+            {
+                spriteBatch.DrawString(_font, placement.name + " " + placement.score, vector, Color.White);
+                vector.Y += 50;
+            }
+
             spriteBatch.End();
         }
 
