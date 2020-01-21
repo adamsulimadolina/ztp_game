@@ -6,6 +6,10 @@ using System;
 using ztp_game.Input;
 
 using ztp_game.Memento;
+<<<<<<< HEAD
+=======
+using ztp_game.ObserverTemplate;
+>>>>>>> Piotr
 using ztp_game.Sprites;
 using ztp_game.States;
 using ztp_game.Strategy;
@@ -15,7 +19,7 @@ namespace ztp_game
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Game1 : Game, Observer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -24,6 +28,16 @@ namespace ztp_game
         SaveCaretaker saveCaretaker;
 
         SoundManager soundManager;
+        private bool easyLevel;
+
+        public void IsGameEasy(bool difficulty)
+        {
+            easyLevel = difficulty;
+        }
+        public bool getEasyLevel()
+        {
+            return easyLevel;
+        }
 
 
         public Game1()
@@ -38,10 +52,22 @@ namespace ztp_game
 
         private State _currentState;
         private State _nextState;
+        public State currentGameState;
 
 
         public void ChangeState(State state)
         {
+            if (state is GameState) currentGameState =state;
+            if (state is ConfirmExitState && _currentState is GameState)
+            {
+                var gameState = _currentState as GameState;
+                saveCaretaker.AddMemento(gameState.Save());
+            }
+            if (state is GameState && _currentState is ConfirmExitState)
+            {
+                var gameState = state as GameState;
+                gameState.ReadSave(saveCaretaker.GetMemento());
+            }
             if (state is GameState && _currentState is MenuState)
             {
                 var gameState = state as GameState;
@@ -52,6 +78,7 @@ namespace ztp_game
                 var gameState = _currentState as GameState;
                 saveCaretaker.AddMemento(gameState.Save());
             }
+
             _nextState = state;
         }
 
@@ -163,6 +190,11 @@ namespace ztp_game
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        public void Update()
+        {
+            saveCaretaker.RemoveSave();
         }
     }
 }

@@ -7,82 +7,59 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ztp_game.Components;
-using ztp_game.Strategy;
 
 namespace ztp_game.States
 {
-    class OptionsState : State
+    class DifficultyState : State
     {
         private List<Component> _components;
         private NavigationMenu navigationMenu;
-        public AudioButton musicVolumeButton, soundVolumeButton;
 
-        public OptionsState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public DifficultyState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
-
             var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
 
-            musicVolumeButton = new AudioButton(buttonTexture, buttonFont, _game.GetMusicVolume())
+            var easyGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(550, 340),
-                Text = "Music volume: ",
-                OnClick = ApplyMusicVolume,
+                Text = "Easy",
             };
+            easyGameButton.OnClick += EasyGameButton_Click;
 
-            soundVolumeButton = new AudioButton(buttonTexture, buttonFont, _game.GetSoundVolume())
+            var hardGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(550, 400),
-                Text = "Sounds volume: ",
-                OnClick = ApplySoundVolume,
+                Text = "Hard",
             };
-
-            var backButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(550, 600),
-                Text = "Back",
-            };
-            backButton.OnClick += BackButton_Click;
-
+            hardGameButton.OnClick += HardGameButton_Click;
 
             navigationMenu = new NavigationMenu(new List<Component>
             {
-                musicVolumeButton,
-                soundVolumeButton,
-                backButton,
+                easyGameButton,
+                hardGameButton,
             });
-            //navigationMenu = new NavigationMenu(new List<Button>
-            //{
-            //    backButton,
-            //});
-
-
             _components = new List<Component>()
             {
                 background,
                 navigationMenu,
-                //navigationMenu
             };
         }
 
-        private void BackButton_Click(object sender, EventArgs e)
+        private void EasyGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+            _game.IsGameEasy(true);
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
         }
-
-        private void ApplyMusicVolume(object sender, EventArgs e)
+        private void HardGameButton_Click(object sender, EventArgs e)
         {
-            _game.SetMusicMasterVolume(musicVolumeButton.GetVolume());
-        }
-        private void ApplySoundVolume(object sender, EventArgs e)
-        {
-            _game.SetSoundMasterVolume(soundVolumeButton.GetVolume());
-            _game.PlaySound("death");
+            _game.IsGameEasy(false);
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -95,12 +72,10 @@ namespace ztp_game.States
             spriteBatch.End();
         }
 
-
         public override void Update(GameTime gameTime)
         {
             foreach (var component in _components)
                 component.Update(gameTime);
         }
-
     }
 }

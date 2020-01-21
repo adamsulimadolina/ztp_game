@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ztp_game.Components;
+using ztp_game.Sprites;
 using ztp_game.Strategy;
 
 namespace ztp_game.States
@@ -26,14 +27,14 @@ namespace ztp_game.States
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
-            var background = new Background(backgroundTexture)
+            var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 280),
+                Position = new Vector2(550, 290),
                 Text = "New Game",
             };
 
@@ -42,7 +43,7 @@ namespace ztp_game.States
 
             var loadGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 340),
+                Position = new Vector2(550, 350),
                 Text = "Load game"
             };
 
@@ -51,7 +52,7 @@ namespace ztp_game.States
 
             var rankingButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 400),
+                Position = new Vector2(550, 410),
                 Text = "Ranking",
             };
 
@@ -59,15 +60,15 @@ namespace ztp_game.States
 
             var optionsButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 460),
+                Position = new Vector2(550, 470),
                 Text = "Options",
             };
 
             optionsButton.OnClick += OptionsButton_Click;
 
-            var creditsButton = new Button(buttonTexture, buttonFont)
+            var optionsButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 520),
+                Position = new Vector2(550, 530),
                 Text = "Credits",
             };
 
@@ -75,7 +76,7 @@ namespace ztp_game.States
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 580),
+                Position = new Vector2(550, 590),
                 Text = "Exit",
             };
 
@@ -124,6 +125,7 @@ namespace ztp_game.States
 
             //soundManager = new SoundManager(_content);
             //soundManager.LoadFiles();
+
             _game.PlaySong("menu");
 
         }
@@ -145,13 +147,13 @@ namespace ztp_game.States
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
-        {    
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
+        {
+            _game.ChangeState(new DifficultyState(_game, _graphicsDevice, _content));
         }
 
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, false));
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content,false));
         }
 
         private void RankingButton_Click(object sender, EventArgs e)
@@ -172,7 +174,8 @@ namespace ztp_game.States
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            //sound.StopMusic();
+            Champion champ = Champion.GetInstance();
+            champ.NotifyObservers();
             _game.Exit();
         }
     }

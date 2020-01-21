@@ -28,14 +28,13 @@ namespace ztp_game.Sprites
         private SpriteCollection spriteCollection;
         private float startingSpeed = 4f;
 
-        //private List<Observer> observersList;
         public int points = 0;
 
         public int health = 3;
 
         public int level;
 
-        public List<Observer> observers = new List<Observer>();
+        private List<Observer> observers = new List<Observer>();
 
         private Champion()
         {
@@ -202,21 +201,21 @@ namespace ztp_game.Sprites
             }
         }
 
-        public void attach(Observer observer)
+        public void Attach(Observer observer)
         {
             observers.Add(observer);
         }
 
-        public void detach(Observer observer)
+        public void Detach(Observer observer)
         {
             observers.Remove(observer);
         }
 
-        public void notifyObservers()
+        public void NotifyObservers()
         {
             foreach(var obs in observers)
             {
-                obs.update();
+                obs.Update();
             }
         }
     }

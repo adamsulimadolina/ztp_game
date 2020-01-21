@@ -32,7 +32,13 @@ namespace ztp_game.States
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
             _champ.SetSoundManagerContent(content);
-            level_generator = new EasyLevelGenerator(content);
+            _champ.Attach(game);
+
+
+            if (game.getEasyLevel() == true)
+                level_generator = new EasyLevelGenerator(content);
+            else
+                level_generator = new HardLevelGenerator(content);
             inputManager = InputManager.GetInstance();
             Champion.SetContent(content);
             if (newGame)
@@ -68,30 +74,18 @@ namespace ztp_game.States
         {
             if (inputManager.ActionWasJustPressed("Back"))
             {
-                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+                _game.ChangeState(new ConfirmExitState(_game, _graphicsDevice, _content));
                 return;
             }
             if (Champion.GetInstance().health <= 0)
             {
                 _champ.level = 1;
-
-                _champ.notifyObservers();
+                _champ.NotifyObservers();
                 _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
 
                 return;
             }
-            //_champ.Update(_sprites);
-            /*if (Screen.getChange())
-            {
-                Screen.ChangeMap(false);
-                _champ.points += 15;
-                Screen.setLevel(Screen.getLevel() + 1);
-                _champ.health = 3;
-
-                _champ.ResetValues();
-                _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
-
-            }*/
+            
             Champion.GetInstance().Update();
             
         }
@@ -109,14 +103,6 @@ namespace ztp_game.States
             level_generator.level_array[height, width] = ' ';
         }
 
-        public void update()
-        {
-            //usunięcie zapisu z memento
-            if (File.Exists("Save"))
-            {
-                File.Delete("Save");
-            }
-        }
 
         public void ReadSave(SaveMemento save)
         {

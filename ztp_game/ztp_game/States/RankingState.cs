@@ -18,15 +18,11 @@ namespace ztp_game.States
         public RankingState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
-            _font = _content.Load<SpriteFont>("Components/Font");           
-            var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
-            var background = new Background(backgroundTexture)
-            {
-                Position = new Vector2(0, 0)
-            };
+            var buttonFont = _content.Load<SpriteFont>("Components/Font");
+            _font = buttonFont;
 
-            var backButton = new Button(buttonTexture, _font)
+            var backButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(550, 570),
                 Text = "Go to main menu"
