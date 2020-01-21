@@ -53,9 +53,9 @@
     <Compile Include="Collisions\Collision.cs" />
     <Compile Include="Components\AudioButton.cs" />
     <Compile Include="Components\AudioNavigationMenu.cs" />
-    <Compile Include="Components\Background.cs" />
     <Compile Include="Components\Button.cs" />
     <Compile Include="Components\Component.cs" />
+    <Compile Include="Components\MenuBackground.cs" />
     <Compile Include="Components\NavigationMenu.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Input\InputManager.cs" />
@@ -78,7 +78,9 @@
     <Compile Include="Sprites\Door.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\Thorn.cs" />
+    <Compile Include="States\ConfirmExitState.cs" />
     <Compile Include="States\CreditsState.cs" />
+    <Compile Include="States\DifficultyState.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="States\NewRecordState.cs" />

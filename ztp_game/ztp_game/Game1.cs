@@ -6,10 +6,7 @@ using System;
 using ztp_game.Input;
 
 using ztp_game.Memento;
-<<<<<<< HEAD
-=======
 using ztp_game.ObserverTemplate;
->>>>>>> Piotr
 using ztp_game.Sprites;
 using ztp_game.States;
 using ztp_game.Strategy;

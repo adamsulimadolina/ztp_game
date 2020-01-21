@@ -18,7 +18,7 @@ using ztp_game.TemplateMethod;
 
 namespace ztp_game.States
 {
-    class GameState : State , Observer
+    class GameState : State
     {
         private SpriteFont _font;
         private Champion _champ;

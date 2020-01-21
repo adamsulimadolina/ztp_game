@@ -66,7 +66,7 @@ namespace ztp_game.States
 
             optionsButton.OnClick += OptionsButton_Click;
 
-            var optionsButton = new Button(buttonTexture, buttonFont)
+            var creditsButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(550, 530),
                 Text = "Credits",
