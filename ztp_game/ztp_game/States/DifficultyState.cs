@@ -10,64 +10,67 @@ using ztp_game.Components;
 
 namespace ztp_game.States
 {
-    class CreditsState : State
+    class DifficultyState : State
     {
         private List<Component> _components;
-        private SpriteFont _font;
         private NavigationMenu navigationMenu;
 
-        public CreditsState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public DifficultyState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            _font = _content.Load<SpriteFont>("Components/Font");
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
+            var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
-
             var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
 
-
-            var backButton = new Button(buttonTexture, _font)
+            var easyGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 570),
-                Text = "Go to main menu"
+                Position = new Vector2(550, 280),
+                Text = "Easy",
             };
+            easyGameButton.OnClick += EasyGameButton_Click;
 
-            backButton.OnClick += BackButton_Click;
+            var hardGameButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(550, 340),
+                Text = "Hard",
+            };
+            hardGameButton.OnClick += HardGameButton_Click;
 
             navigationMenu = new NavigationMenu(new List<Component>
             {
-                backButton,
+                easyGameButton,
+                hardGameButton,
             });
             _components = new List<Component>()
             {
                 background,
                 navigationMenu,
             };
-            ;
-
         }
 
-        private void BackButton_Click(object sender, EventArgs e)
+        private void EasyGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+            _game.IsGameEasy(true);
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
+        }
+        private void HardGameButton_Click(object sender, EventArgs e)
+        {
+            _game.IsGameEasy(false);
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, true));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (var elem in _components)
-                elem.Draw(gameTime, spriteBatch);
 
-            spriteBatch.DrawString(_font, "Adam Sulima Dolina", new Vector2(680, 340), Color.White);
-            spriteBatch.DrawString(_font, "Michal Szorc", new Vector2(720, 400), Color.White);
-            spriteBatch.DrawString(_font, "Piotr Awramiuk", new Vector2(710, 460), Color.White);
+            foreach (var component in _components)
+                component.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
         }
-
-
 
         public override void Update(GameTime gameTime)
         {

@@ -52,6 +52,7 @@ namespace ztp_game.Collisions
                         champion.points += 30;
                         champion.level++;
                         champion.health = 3;
+                        champion.ResetValues();
                         GameState.setLevel();
                     }
                 }
@@ -80,6 +81,11 @@ namespace ztp_game.Collisions
                         champion.Velocity.Y = block.Rectangle.Top - champion.Rectangle.Bottom;
 
                         if (block.level_type == Block.LevelType.Magma) champion.LoseHealth();
+                        if (block.level_type == Block.LevelType.Ice)
+                        {
+                            champion.Speed += block.Speed;
+                            if (champion.Speed <= 0) champion.LoseHealth();
+                        }
 
                     }
                     if (champion.Velocity.Y < 0 && champion.IsTouchingBottom(block))
@@ -87,6 +93,11 @@ namespace ztp_game.Collisions
                         champion.Velocity.Y = block.Rectangle.Bottom - champion.Rectangle.Top;
 
                         if (block.level_type == Block.LevelType.Magma) champion.LoseHealth();
+                        if (block.level_type == Block.LevelType.Ice) 
+                        {
+                            champion.Speed += block.Speed;
+                            if (champion.Speed <= 0) champion.LoseHealth();
+                        }
 
 
                     }

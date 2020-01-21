@@ -23,7 +23,7 @@ namespace ztp_game.States
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
-            var background = new Background(backgroundTexture)
+            var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };

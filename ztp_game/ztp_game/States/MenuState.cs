@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ztp_game.Components;
+using ztp_game.Sprites;
 using ztp_game.Strategy;
 
 namespace ztp_game.States
@@ -21,12 +22,13 @@ namespace ztp_game.States
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
+            RankingFile.ReadFromFile();
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
+            
 
-            var background = new Background(backgroundTexture)
+            var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
@@ -145,13 +147,13 @@ namespace ztp_game.States
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
-        {       
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+        {    
+            _game.ChangeState(new DifficultyState(_game, _graphicsDevice, _content));
         }
 
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, saveCaretaker.GetMemento()));
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content,false));
         }
 
         private void RankingButton_Click(object sender, EventArgs e)
@@ -173,6 +175,8 @@ namespace ztp_game.States
         private void ExitButton_Click(object sender, EventArgs e)
         {
             //sound.StopMusic();
+            //Champion champ = Champion.GetInstance();
+            //champ.NotifyObservers();
             _game.Exit();
         }
     }

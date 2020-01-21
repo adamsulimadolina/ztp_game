@@ -37,8 +37,8 @@ namespace ztp_game.Memento
                         int level = reader.ReadInt32();
                         int velocityx = reader.ReadInt32();
                         int velocityy = reader.ReadInt32();
-                        int positionx = reader.ReadInt32();
-                        int positiony = reader.ReadInt32();
+                        float positionx = reader.ReadSingle();
+                        float positiony = reader.ReadSingle();
                         int direction = reader.ReadInt32();
                         reader.Close();
                         fileData = new SaveMemento(levelArray, points, level, health, new Vector2(velocityx, velocityy), new Vector2(positionx, positiony), (Direction) direction);
@@ -70,7 +70,7 @@ namespace ztp_game.Memento
                     writer.Write(memento.GetVelocity().Y);
                     writer.Write(memento.GetPosition().X);
                     writer.Write(memento.GetPosition().Y);
-                    writer.Write((int)Direction.Up);
+                    writer.Write((int)memento.GetDirection());
                     writer.Close();
                     this.memento = memento;
                 }

@@ -21,7 +21,7 @@ namespace ztp_game.States
             _font = _content.Load<SpriteFont>("Components/Font");           
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
 
-            var background = new Background(backgroundTexture)
+            var background = new MenuBackground(backgroundTexture)
             {
                 Position = new Vector2(0, 0)
             };
@@ -45,12 +45,20 @@ namespace ztp_game.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
+            var placements = RankingFile.getPlacements();
+            Vector2 vector = new Vector2(780, 55);
+
             spriteBatch.Begin();
 
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
-            
+
+            foreach (var placement in placements)
+            {
+                spriteBatch.DrawString(_font, placement.name + " " + placement.score, vector, Color.White);
+                vector.Y += 50;
+            }
+
             spriteBatch.End();
         }
 

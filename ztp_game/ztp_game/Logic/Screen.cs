@@ -86,37 +86,7 @@ namespace ztp_game.Logic
             return (ConsoleColor)color.GetValue(rnd.Next(color.Length));
         }
 
-        //public static char[,] Fill() //wypelnianie bufora (postac, ramka, przeszkody)
-        //{
-        //    char[,] buffer = new char[height, width];
-        //    Level l = new Level();
-
-
-        //    for (int i = 0; i < height; i++)
-        //    {
-        //        for (int j = 0; j < width; j++)
-        //        {
-        //            buffer[i, j] = ' ';
-        //        }
-        //    }
-
-
-        //    for (int i = 0; i < height; i++)
-        //    {
-        //        for (int j = 0; j < width; j++)
-        //        {
-        //            if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
-        //            {
-        //                buffer[i, j] = '\u2593';
-        //            }
-        //        }
-        //    }
-
-        //    buffer = l.BlocksGenerator(buffer, height, width);
-        //    buffer = l.PointsGenerator(buffer, height, width);
-        //    return buffer;
-        //}
-
+        
         public static void DisplayMenu(int position)
         {
             //music.StopMusic();
@@ -171,33 +141,7 @@ namespace ztp_game.Logic
 
         }
 
-        //public static void DisplayRanking()
-        //{
-        //    int counter = 1;
-        //    Console.Clear();
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //    //Console.CursorVisible = false;
-        //    List<SplitData> placements = RankingFile.getPlacements();
-
-        //    Console.SetCursorPosition(middle + 4, 2);
-
-        //    foreach (var placement in placements)
-        //    {
-        //        Console.WriteLine(counter + ". " + placement.name + ' ' + placement.score);
-        //        Console.SetCursorPosition(middle + 4, Console.CursorTop + 2);
-        //        counter++;
-
-        //    }
-        //    while (counter <= 10)
-        //    {
-        //        Console.WriteLine(counter + ". ");
-        //        Console.SetCursorPosition(middle + 4, Console.CursorTop + 2);
-        //        counter++;
-        //    }
-        //    Console.SetCursorPosition(0, 0);
-        //    //RankingFile.ReadFromFile();
-
-        //}
+       
 
         public class ScreenColor
         {
@@ -280,56 +224,7 @@ namespace ztp_game.Logic
 
 
 
-        //public static void DisplayGame(Champion champ) //wyswietlenie tego co w buforze
-        //{
-
-        //    music.StopMusic();
-        //    ScreenColor color = new ScreenColor();
-        //    Random rnd = new Random();
-        //    int roll = rnd.Next(1, 4);
-        //    //int roll = 4;
-        //    int rollReggae = rnd.Next(1, 17);
-        //    if (rollReggae == 16) roll = 4;
-
-        //    screen = Fill();
-        //    Console.SetCursorPosition(0, 0);
-        //    //Console.BackgroundColor = ConsoleColor.DarkGray;
-        //    color.ScreenBackground(roll);
-        //    if (roll == 4) music.PlayMusic();
-        //    Console.CursorVisible = false;
-        //    for (int i = 0; i < height; i++)
-        //    {
-        //        for (int j = 0; j < width; j++)
-        //        {
-        //            if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
-        //            {
-        //                color.ScreenBorder(roll);
-        //            }
-        //            else
-        //            {
-        //                color.ScreenForeground(roll);
-        //            }
-
-        //            if (i >= height - 4 && i < height - 1 && j >= width - 4 && j < width - 1)
-        //            {
-        //                color.ScreenGoal(roll);
-        //            }
-        //            else
-        //            {
-        //                color.ScreenBackground(roll);
-        //            }
-        //            Console.Write(screen[i, j]);
-
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //    //Console.WriteLine();
-
-        //    Console.WriteLine("Health: {0} Points: {1} Level: {2}", champ.getHealth(), champ.getPoints(), level);
-
-        //}
-
-
+        
         public static void DisplayCredits()
         {
             string name1 = "Adam Sulima Dolina", name2 = "Michał Szorc", name3 = "Piotr Awramiuk";
@@ -361,41 +256,5 @@ namespace ztp_game.Logic
             }
         }
 
-        //public static void AddPlacement(Champion champ)
-        //{
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //    Console.Clear();
-        //    var list = RankingFile.getPlacements();
-        //    Console.CursorVisible = true;
-        //    string points = "Great job! You got " + champ.getPoints() + " points!";
-        //    string signature = "Please enter your three letter signature: ";
-        //    Console.SetCursorPosition(width / 2 - points.Length / 2, height / 2 - 4);
-        //    Console.WriteLine(points);
-        //    if (list.Count < 10)
-        //    {
-        //        Console.SetCursorPosition(width / 2 - signature.Length / 2, height / 2 - 2);
-        //        Console.WriteLine(signature);
-        //        Console.SetCursorPosition(width / 2 - 1, height / 2);
-        //        string name = RankingFile.ReadThreeCharacters();
-        //        RankingFile.AddToList(name, champ.getPoints());
-        //        Console.Clear();
-        //        return;
-        //    }
-        //    if (list[list.Count - 1].score < champ.getPoints())
-        //    {
-        //        Console.SetCursorPosition(width / 2 - signature.Length / 2, height / 2 - 2);
-        //        Console.WriteLine(signature);
-        //        Console.SetCursorPosition(width / 2 - 1, height / 2);
-        //        string name = RankingFile.ReadThreeCharacters();
-        //        RankingFile.AddToList(name, champ.getPoints());
-        //    }
-        //    else
-        //    {
-        //        Console.CursorVisible = false;
-        //        Console.ReadKey();
-        //    }
-        //    Console.BackgroundColor = ConsoleColor.Black;
-        //    Console.Clear();
-        //}
     }
 }

@@ -20,6 +20,7 @@ namespace ztp_game.Sprites
         public void SetType(LevelType type)
         {
             this.level_type = type;
+            if (type == LevelType.Ice) this.Speed = - Champion.GetInstance().Speed / 120;
         }
 
 
