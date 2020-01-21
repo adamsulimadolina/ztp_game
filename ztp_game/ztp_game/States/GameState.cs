@@ -25,7 +25,7 @@ namespace ztp_game.States
         private static AbstractLevelGenerator level_generator;
         private InputManager inputManager;
         private bool newGame;
-        private static int pick;
+        private static int pick = 1;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, bool newGame) : base(game, graphicsDevice, content)
         {
 
@@ -96,8 +96,8 @@ namespace ztp_game.States
 
         public static void setLevel()
         {
-            Random rnd = new Random();
-            pick = rnd.Next(1, 3);
+            if (pick == 1) pick = 2;
+            else pick = 1;
             level_generator.setPick(pick);
             level_generator.ResetBlocksList();
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
@@ -115,15 +115,18 @@ namespace ztp_game.States
         {
             if (save != null && !newGame)
             {
+                Console.WriteLine("PICK MEMENTO: " + save.GetPick());
                 level_generator.level_array = save.GetLevelArray();
                 _champ.level = save.GetLevel();
                 _champ.ResetValues();
                 _champ.points = save.GetPoints();
                 _champ.health = save.GetHealth();
                 _champ.Velocity = save.GetVelocity();
+                _champ.Speed = save.GetSpeed();
                 _champ.Position = save.GetPosition();
                 _champ.ChangeDirection(save.GetDirection());
                 pick = save.GetPick();
+                level_generator.setPick(pick);
                 level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
             }
         }
@@ -131,7 +134,7 @@ namespace ztp_game.States
 
         public SaveMemento Save()
         {
-            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection(), pick);
+            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection(), pick, _champ.Speed);
 
         }
     }
