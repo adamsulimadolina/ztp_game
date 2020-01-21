@@ -175,9 +175,7 @@ namespace ztp_game.States
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Champion champ = Champion.GetInstance();
-            champ.NotifyObservers();
+        { 
             _game.Exit();
         }
     }

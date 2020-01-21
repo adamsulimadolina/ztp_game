@@ -16,12 +16,14 @@ namespace ztp_game.TemplateMethod
         public HardLevelGenerator(ContentManager content)
         {
             this.content = content;
+            this.blockList = new List<BlocksList>();
         }
         public override void BuildLevel(int height, int width)
         {
             char sign = ' ';
             board_builder = new MagmaLevelBuilder(this.content);
             if (pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (pick == 2) board_builder = new JungleLevelBuilder(this.content);
 
             board_builder.GenerateBackground();
             for (int i = 0; i < height; i++)
@@ -42,6 +44,7 @@ namespace ztp_game.TemplateMethod
                 board_builder.y += 16;
             }
             sprite_collection = board_builder.GetLevel();
+            Champion.GetInstance().SetCollection(sprite_collection);
         }
 
         protected override char[,] CreateBlocks(int height, int width)

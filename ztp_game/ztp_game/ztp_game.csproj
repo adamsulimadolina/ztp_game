@@ -47,6 +47,7 @@
     <Compile Include="Auxiliary Classes\BlocksList.cs" />
     <Compile Include="Builder\IBoardBuilder.cs" />
     <Compile Include="Builder\IceLevelBuilder.cs" />
+    <Compile Include="Builder\JungleLevelBuilder.cs" />
     <Compile Include="Builder\MagmaLevelBuilder.cs" />
     <Compile Include="Collection\ISpriteCollection.cs" />
     <Compile Include="Collection\SpriteCollection.cs" />

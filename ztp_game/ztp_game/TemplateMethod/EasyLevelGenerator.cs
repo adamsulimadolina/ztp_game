@@ -243,10 +243,10 @@ namespace ztp_game.TemplateMethod
 
         public override void BuildLevel(int height, int width)
         {
-            Champion.GetInstance().SetCollection(sprite_collection);
             char sign = ' ';
             board_builder = new MagmaLevelBuilder(this.content);
             if (pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (pick == 2) board_builder = new JungleLevelBuilder(this.content);
 
             board_builder.GenerateBackground();
             for(int i = 0; i < height; i++)

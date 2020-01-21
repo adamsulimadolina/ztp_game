@@ -74,6 +74,7 @@ namespace ztp_game.Memento
                     writer.Write(memento.GetPosition().Y);
                     writer.Write((int)memento.GetDirection());
                     writer.Write(memento.GetPick());
+                    writer.Write(memento.GetSpeed());
                     writer.Close();
                     this.memento = memento;
                 }

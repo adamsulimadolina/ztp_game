@@ -97,6 +97,7 @@ namespace ztp_game.States
         public static void setLevel()
         {
             if (pick == 1) pick = 2;
+            else if (pick == 2) pick = 3;
             else pick = 1;
             level_generator.setPick(pick);
             level_generator.ResetBlocksList();
