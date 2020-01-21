@@ -20,7 +20,7 @@ namespace ztp_game.TemplateMethod
             this.content = content;
             this.blockList = new List<BlocksList>();
         }
-        public override char[,] CreateBlocks(int height, int width)
+        protected override char[,] CreateBlocks(int height, int width)
         {
             Random rnd = new Random();
             List<bool> blockDirection = new List<bool> { true, false };
@@ -103,7 +103,7 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateCoins(int height, int width)
+        protected override char[,] CreateCoins(int height, int width)
         {
             Random rnd = new Random();
 
@@ -124,7 +124,7 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateGaps(int height, int width)
+        protected override char[,] CreateGaps(int height, int width)
         {
             Random rnd = new Random();
             int length = 0;
@@ -221,12 +221,12 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateThorns(int height, int width)
+        protected override char[,] CreateThorns(int height, int width)
         {
             return this.level_array;
         }
 
-        public override char[,] CreateBorder(int height, int width)
+        protected override char[,] CreateBorder(int height, int width)
         {
             for(int i = 0; i< height; i++)
             {

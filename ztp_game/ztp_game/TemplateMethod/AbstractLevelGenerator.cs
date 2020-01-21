@@ -50,12 +50,12 @@ namespace ztp_game.TemplateMethod
             
 
         }
-        public abstract char[,] CreateBlocks(int height, int width);
-        public abstract char[,] CreateThorns(int height, int width);
-        public abstract char[,] CreateGaps(int height, int width);
+        protected abstract char[,] CreateBlocks(int height, int width);
+        protected abstract char[,] CreateThorns(int height, int width);
+        protected abstract char[,] CreateGaps(int height, int width);
 
-        public abstract char[,] CreateCoins(int height, int width);
-        public abstract char[,] CreateBorder(int height, int width);
+        protected abstract char[,] CreateCoins(int height, int width);
+        protected abstract char[,] CreateBorder(int height, int width);
 
         public int PickColorToBuild()
         {
