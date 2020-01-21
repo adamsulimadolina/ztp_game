@@ -160,13 +160,6 @@ namespace ztp_game.Sprites
             direction = Direction.Down;
         }
 
-        private void GetPoint(Sprite coin, List<Sprite> sprites)
-        {
-            sprites.Remove(coin);
-            Velocity = Vector2.Zero;
-            this.points++;
-        }
-
         public void LoseHealth()
         {
             
