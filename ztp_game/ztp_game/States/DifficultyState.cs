@@ -27,14 +27,14 @@ namespace ztp_game.States
 
             var easyGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 280),
+                Position = new Vector2(550, 340),
                 Text = "Easy",
             };
             easyGameButton.OnClick += EasyGameButton_Click;
 
             var hardGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 340),
+                Position = new Vector2(550, 400),
                 Text = "Hard",
             };
             hardGameButton.OnClick += HardGameButton_Click;

@@ -78,6 +78,7 @@
     <Compile Include="Sprites\Door.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\Thorn.cs" />
+    <Compile Include="States\ConfirmExitState.cs" />
     <Compile Include="States\CreditsState.cs" />
     <Compile Include="States\DifficultyState.cs" />
     <Compile Include="States\GameState.cs" />

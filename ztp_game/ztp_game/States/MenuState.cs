@@ -35,7 +35,7 @@ namespace ztp_game.States
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 280),
+                Position = new Vector2(550, 290),
                 Text = "New Game",
             };
 
@@ -44,7 +44,7 @@ namespace ztp_game.States
 
             var loadGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 340),
+                Position = new Vector2(550, 350),
                 Text = "Load game"
             };
 
@@ -53,7 +53,7 @@ namespace ztp_game.States
 
             var rankingButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 400),
+                Position = new Vector2(550, 410),
                 Text = "Ranking",
             };
 
@@ -61,7 +61,7 @@ namespace ztp_game.States
 
             var optionsButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 460),
+                Position = new Vector2(550, 470),
                 Text = "Options",
             };
 
@@ -69,7 +69,7 @@ namespace ztp_game.States
 
             var creditsButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 520),
+                Position = new Vector2(550, 530),
                 Text = "Credits",
             };
 
@@ -77,7 +77,7 @@ namespace ztp_game.States
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(550, 580),
+                Position = new Vector2(550, 590),
                 Text = "Exit",
             };
 
@@ -126,6 +126,7 @@ namespace ztp_game.States
 
             //soundManager = new SoundManager(_content);
             //soundManager.LoadFiles();
+            
             _game.PlaySong("menu");
 
         }
@@ -174,9 +175,8 @@ namespace ztp_game.States
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            //sound.StopMusic();
-            //Champion champ = Champion.GetInstance();
-            //champ.NotifyObservers();
+            Champion champ = Champion.GetInstance();
+            champ.NotifyObservers();
             _game.Exit();
         }
     }

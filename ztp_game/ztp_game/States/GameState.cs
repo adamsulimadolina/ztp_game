@@ -76,7 +76,7 @@ namespace ztp_game.States
         {
             if (inputManager.ActionWasJustPressed("Back"))
             {
-                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+                _game.ChangeState(new ConfirmExitState(_game, _graphicsDevice, _content));
                 return;
             }
             if (Champion.GetInstance().health <= 0)

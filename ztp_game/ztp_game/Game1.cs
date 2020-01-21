@@ -49,10 +49,22 @@ namespace ztp_game
 
         private State _currentState;
         private State _nextState;
+        public State currentGameState;
 
 
         public void ChangeState(State state)
         {
+            if (state is GameState) currentGameState =state;
+            if (state is ConfirmExitState && _currentState is GameState)
+            {
+                var gameState = _currentState as GameState;
+                saveCaretaker.AddMemento(gameState.Save());
+            }
+            if (state is GameState && _currentState is ConfirmExitState)
+            {
+                var gameState = state as GameState;
+                gameState.ReadSave(saveCaretaker.GetMemento());
+            }
             if (state is GameState && _currentState is MenuState)
             {
                 var gameState = state as GameState;
@@ -63,6 +75,7 @@ namespace ztp_game
                 var gameState = _currentState as GameState;
                 saveCaretaker.AddMemento(gameState.Save());
             }
+            
             _nextState = state;
         }
 
