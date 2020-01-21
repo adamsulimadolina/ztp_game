@@ -8,6 +8,6 @@ namespace ztp_game.ObserverTemplate
 {
     public interface Observer
     {
-        void update();
+        void Update();
     }
 }

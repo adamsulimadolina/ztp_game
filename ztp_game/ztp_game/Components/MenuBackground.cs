@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ztp_game.Components
 {
-    class Background : Component
+    class MenuBackground : Component
     {
         
-        public Background(Texture2D texture)
+        public MenuBackground(Texture2D texture)
         {
             _texture = texture;
 

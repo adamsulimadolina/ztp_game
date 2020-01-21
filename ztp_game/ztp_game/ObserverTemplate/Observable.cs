@@ -8,8 +8,8 @@ namespace ztp_game.ObserverTemplate
 {
     public interface Observable
     {
-        void attach(Observer observer);
-        void detach(Observer observer);
-        void notifyObservers();
+        void Attach(Observer observer);
+        void Detach(Observer observer);
+        void NotifyObservers();
     }
 }

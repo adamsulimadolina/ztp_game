@@ -1,25 +1,41 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using ztp_game.Input;
 
 using ztp_game.Memento;
-
+using ztp_game.ObserverTemplate;
+using ztp_game.Sprites;
 using ztp_game.States;
+using ztp_game.Strategy;
 
 namespace ztp_game
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Game1 : Game, Observer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         InputManager inputManager;
 
         SaveCaretaker saveCaretaker;
+
+        SoundManager soundManager;
+        private bool easyLevel;
+
+        public void IsGameEasy(bool difficulty)
+        {
+            easyLevel = difficulty;
+        }
+        public bool getEasyLevel()
+        {
+            return easyLevel;
+        }
+
 
 
         public Game1()
@@ -29,22 +45,70 @@ namespace ztp_game
             inputManager = InputManager.GetInstance();
             saveCaretaker = new SaveCaretaker();
 
+            soundManager = new SoundManager(Content);
+            MediaPlayer.IsRepeating = true;
         }
 
         private State _currentState;
         private State _nextState;
+        public State currentGameState;
 
 
         public void ChangeState(State state)
         {
+            if (state is GameState) currentGameState =state;
+            if (state is ConfirmExitState && _currentState is GameState)
+            {
+                var gameState = _currentState as GameState;
+                saveCaretaker.AddMemento(gameState.Save());
+            }
+            if (state is GameState && _currentState is ConfirmExitState)
+            {
+                var gameState = state as GameState;
+                gameState.ReadSave(saveCaretaker.GetMemento());
+            }
+            if (state is GameState && _currentState is MenuState)
+            {
+                var gameState = state as GameState;
+                gameState.ReadSave(saveCaretaker.GetMemento());
+            }
+            if (!(state is GameState) && _currentState is GameState && Champion.GetInstance().health > 0)
+            {
+                var gameState = _currentState as GameState;
+                saveCaretaker.AddMemento(gameState.Save());
+            }
+
             _nextState = state;
         }
 
-        public SaveCaretaker GetSaveCaretaker()
+        public void LoadAudioFiles()
         {
-            return saveCaretaker;
+            soundManager.LoadFiles();
         }
-
+        public void PlaySong(string name)
+        {
+            soundManager.PlaySong(name);
+        }
+        public void PlaySound(string name)
+        {
+            soundManager.PlaySound(name);
+        }
+        public void SetMusicMasterVolume(float volume)
+        {
+            soundManager.SetMusicMasterVolume(volume);
+        }
+        public void SetSoundMasterVolume(float volume)
+        {
+            soundManager.SetSoundMasterVolume(volume);
+        }
+        public float GetMusicVolume()
+        {
+            return soundManager.GetMusicVolume();
+        }
+        public float GetSoundVolume()
+        {
+            return soundManager.GetSoundVolume();
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -59,6 +123,9 @@ namespace ztp_game
             graphics.PreferredBackBufferWidth = 1600;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = 680;   // set this value to the desired height of your window
             graphics.ApplyChanges();
+            LoadAudioFiles();
+            SetMusicMasterVolume(1.0f);
+            SetSoundMasterVolume(1.0f);
             _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
 
             ChangeState(_currentState);
@@ -122,6 +189,11 @@ namespace ztp_game
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        public void Update()
+        {
+            saveCaretaker.RemoveSave();
         }
     }
 }
