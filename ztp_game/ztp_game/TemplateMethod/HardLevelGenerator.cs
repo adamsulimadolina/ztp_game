@@ -20,9 +20,8 @@ namespace ztp_game.TemplateMethod
         public override void BuildLevel(int height, int width)
         {
             char sign = ' ';
-            int pick = PickColorToBuild();
             board_builder = new MagmaLevelBuilder(this.content);
-            if (pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (this.pick == 1) board_builder = new IceLevelBuilder(this.content);
 
             board_builder.GenerateBackground();
             for (int i = 0; i < height; i++)

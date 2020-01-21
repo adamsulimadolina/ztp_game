@@ -15,7 +15,7 @@ namespace ztp_game.TemplateMethod
     abstract class AbstractLevelGenerator
     {
 
-
+        public int pick { get; set;}
         public char[,] level_array { get; set; }
 
         protected IBoardBuilder board_builder { get; set; }
@@ -25,6 +25,11 @@ namespace ztp_game.TemplateMethod
         protected List<BlocksList> blockList = new List<BlocksList>();
 
         public SpriteCollection GetLevel() { return new SpriteCollection(); }
+
+        public void setPick(int num)
+        {
+            this.pick = num;
+        }
 
         public abstract void BuildLevel(int height, int width);
 
@@ -59,12 +64,7 @@ namespace ztp_game.TemplateMethod
         protected abstract char[,] CreateBorder(int height, int width);
 
 
-        public int PickColorToBuild()
-        {
-            Random rnd = new Random();
-            int number = rnd.Next(1, 3);
-            return number;
-        }
+
 
         private void FillArray()
         {

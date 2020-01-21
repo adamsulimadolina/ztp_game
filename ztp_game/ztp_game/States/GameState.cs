@@ -25,7 +25,7 @@ namespace ztp_game.States
         private static AbstractLevelGenerator level_generator;
         private InputManager inputManager;
         private bool newGame;
-
+        private static int pick;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, bool newGame) : base(game, graphicsDevice, content)
         {
 
@@ -96,6 +96,9 @@ namespace ztp_game.States
 
         public static void setLevel()
         {
+            Random rnd = new Random();
+            pick = rnd.Next(1, 3);
+            level_generator.setPick(pick);
             level_generator.ResetBlocksList();
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
         }
@@ -120,6 +123,7 @@ namespace ztp_game.States
                 _champ.Velocity = save.GetVelocity();
                 _champ.Position = save.GetPosition();
                 _champ.ChangeDirection(save.GetDirection());
+                pick = save.GetPick();
                 level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
             }
         }
@@ -127,7 +131,7 @@ namespace ztp_game.States
 
         public SaveMemento Save()
         {
-            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection());
+            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection(), pick);
 
         }
     }
