@@ -26,7 +26,6 @@ namespace ztp_game.States
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             var backgroundTexture = _content.Load<Texture2D>("Components/Background");
-            
 
             var background = new MenuBackground(backgroundTexture)
             {
@@ -124,11 +123,7 @@ namespace ztp_game.States
                 _game.PlaySong("menu");
             }
 
-            //soundManager = new SoundManager(_content);
-            //soundManager.LoadFiles();
-            
             _game.PlaySong("menu");
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -148,7 +143,7 @@ namespace ztp_game.States
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
-        {    
+        {
             _game.ChangeState(new DifficultyState(_game, _graphicsDevice, _content));
         }
 
@@ -159,7 +154,6 @@ namespace ztp_game.States
 
         private void RankingButton_Click(object sender, EventArgs e)
         {
-            //sound.StopMusic();
             _game.ChangeState(new RankingState(_game, _graphicsDevice, _content));
         }
         private void OptionsButton_Click(object sender, EventArgs e)
@@ -169,14 +163,11 @@ namespace ztp_game.States
 
         private void CreditsButton_Click(object sender, EventArgs e)
         {
-            //sound.StopMusic();
             _game.ChangeState(new CreditsState(_game, _graphicsDevice, _content));
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Champion champ = Champion.GetInstance();
-            champ.NotifyObservers();
+        { 
             _game.Exit();
         }
     }

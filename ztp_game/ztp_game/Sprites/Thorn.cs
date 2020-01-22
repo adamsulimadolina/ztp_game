@@ -8,12 +8,6 @@ namespace ztp_game.Sprites
 {
     public class Thorn: Sprite
     {
-        private Direction direction;
-
-        public void FlipTexture()
-        {
-
-        }
     }
 
 }

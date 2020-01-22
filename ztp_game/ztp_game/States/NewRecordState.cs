@@ -19,10 +19,9 @@ namespace ztp_game.States
         private Champion champ;
         private string name; 
         private NavigationMenu navigationMenu;
-        private bool isNewRekord;
-        private List<SplitData> placements = RankingFile.getPlacements();
-        public static KeyboardState CurrentState;
-        public static KeyboardState PreviousState;
+        private bool isNewRecord;
+        public static KeyboardState currentState;
+        public static KeyboardState previousState;
 
 
         public NewRecordState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
@@ -44,8 +43,8 @@ namespace ztp_game.States
             };
 
             _components = new List<Component>();
-            backButton.OnClick += backButton_Click;
-            submitButton.OnClick += submitButton_Click;
+            backButton.OnClick += BackButton_Click;
+            submitButton.OnClick += SubmitButton_Click;
             navigationMenu = new NavigationMenu(new List<Component>
             {
                 backButton,
@@ -68,7 +67,7 @@ namespace ztp_game.States
                 {
                     navigationMenu
                 };
-                isNewRekord = true;
+                isNewRecord = true;
             }
             else
             {
@@ -80,7 +79,7 @@ namespace ztp_game.States
                 {
                     navigationMenu
                 };
-                isNewRekord = false;
+                isNewRecord = false;
             }
 
         }
@@ -98,7 +97,7 @@ namespace ztp_game.States
             spriteBatch.Begin();
 
             spriteBatch.DrawString(_font, points, vector1, Color.White);
-            if (isNewRekord)
+            if (isNewRecord)
             {
                 spriteBatch.DrawString(_font, signature, vector2, Color.White);
                 name = ReadCharacter(name);
@@ -116,11 +115,11 @@ namespace ztp_game.States
             foreach (var component in _components)
                 component.Update(gameTime);
         }
-        private void backButton_Click(object sender, EventArgs e)
+        private void BackButton_Click(object sender, EventArgs e)
         {
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
         }
-        private void submitButton_Click(object sender, EventArgs e)
+        private void SubmitButton_Click(object sender, EventArgs e)
         {
             if (!HasThreeCharacters(name))
             {
@@ -128,7 +127,6 @@ namespace ztp_game.States
             }
             else
             {
-                ////////////////////////PATRZ TU
                 RankingFile.AddToList(name, champ.points);
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             }
@@ -141,8 +139,8 @@ namespace ztp_game.States
         }
         private static string ReadCharacter(string name)
         {
-            PreviousState = CurrentState;
-            CurrentState = Keyboard.GetState();
+            previousState = currentState;
+            currentState = Keyboard.GetState();
 
             StringBuilder sb = new StringBuilder();
             sb.Append(name);
@@ -210,7 +208,7 @@ namespace ztp_game.States
         }
         public static bool ActionWasJustPressed(Keys key)
         {
-            if (ActionIsPressed(key) && PreviousState.IsKeyUp(key))
+            if (ActionIsPressed(key) && previousState.IsKeyUp(key))
                 return true;
             else
                 return false;
@@ -219,7 +217,7 @@ namespace ztp_game.States
 
         private static bool ActionIsPressed(Keys key)
         {
-            if (CurrentState.IsKeyDown(key))
+            if (currentState.IsKeyDown(key))
                 return true;
             else
                 return false;

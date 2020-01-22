@@ -16,13 +16,14 @@ namespace ztp_game.TemplateMethod
         public HardLevelGenerator(ContentManager content)
         {
             this.content = content;
+            this.blockList = new List<BlocksList>();
         }
         public override void BuildLevel(int height, int width)
         {
             char sign = ' ';
-            int pick = PickColorToBuild();
             board_builder = new MagmaLevelBuilder(this.content);
             if (pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (pick == 2) board_builder = new JungleLevelBuilder(this.content);
 
             board_builder.GenerateBackground();
             for (int i = 0; i < height; i++)
@@ -43,9 +44,10 @@ namespace ztp_game.TemplateMethod
                 board_builder.y += 16;
             }
             sprite_collection = board_builder.GetLevel();
+            Champion.GetInstance().SetCollection(sprite_collection);
         }
 
-        public override char[,] CreateBlocks(int height, int width)
+        protected override char[,] CreateBlocks(int height, int width)
         {
             char[,] buffer = this.level_array;
             Random rnd = new Random();
@@ -128,7 +130,7 @@ namespace ztp_game.TemplateMethod
             return buffer;
         }
 
-        public override char[,] CreateBorder(int height, int width)
+        protected override char[,] CreateBorder(int height, int width)
         {
             for (int i = 0; i < height; i++)
             {
@@ -143,7 +145,7 @@ namespace ztp_game.TemplateMethod
             return this.level_array;
         }
 
-        public override char[,] CreateCoins(int height, int width)
+        protected override char[,] CreateCoins(int height, int width)
         {
             Random rnd = new Random();
 
@@ -163,7 +165,7 @@ namespace ztp_game.TemplateMethod
             return this.level_array;
         }
 
-        public override char[,] CreateGaps(int height, int width)
+        protected override char[,] CreateGaps(int height, int width)
         {
             Random rnd = new Random();
             int length = 0;
@@ -261,7 +263,7 @@ namespace ztp_game.TemplateMethod
             return buffer;
         }
 
-        public override char[,] CreateThorns(int height, int width)
+        protected override char[,] CreateThorns(int height, int width)
         {
             Random rnd = new Random();
             char[,] buffer = this.level_array;

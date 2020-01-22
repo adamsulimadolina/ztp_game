@@ -25,9 +25,10 @@ namespace ztp_game.States
         private static AbstractLevelGenerator level_generator;
         private InputManager inputManager;
         private bool newGame;
-
+        private static int pick = 1;
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, bool newGame) : base(game, graphicsDevice, content)
         {
+
             this.newGame = newGame;
             _font = content.Load<SpriteFont>("Components/Font");
             _champ = Champion.GetInstance();
@@ -39,26 +40,23 @@ namespace ztp_game.States
                 level_generator = new EasyLevelGenerator(content);
             else
                 level_generator = new HardLevelGenerator(content);
-
-
             inputManager = InputManager.GetInstance();
             Champion.SetContent(content);
             if (newGame)
             {
                 _champ.ResetValues();
-                setLevel();
+                SetLevel();
             }
             if (_champ.level == 1)
                 _champ.SetValuesToStandard();
             _game.PlaySong("gameplay");
         }    
 
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            
-            //_champ.Draw(spriteBatch);
-            //_board.Draw(spriteBatch);
+
             spriteBatch.DrawString(_font, "Score: " + _champ.points + "  ", new Vector2(0, Screen.getHeight() * 16), Color.White);
             spriteBatch.DrawString(_font, "  Level: " + _champ.level + "  ", new Vector2((Screen.getWidth() / 3) * 16, Screen.getHeight() * 16), Color.White);
             spriteBatch.DrawString(_font, "  Health: " + _champ.health + "  ", new Vector2((Screen.getWidth() * 2 / 3) * 16, Screen.getHeight() * 16), Color.White);
@@ -85,7 +83,6 @@ namespace ztp_game.States
 
                 _champ.NotifyObservers();
                 _game.ChangeState(new NewRecordState(_game, _graphicsDevice, _content));
-
                 return;
             }
             
@@ -93,8 +90,12 @@ namespace ztp_game.States
             
         }
 
-        public static void setLevel()
+        public static void SetLevel()
         {
+            if (pick == 1) pick = 2;
+            else if (pick == 2) pick = 3;
+            else pick = 1;
+            level_generator.setPick(pick);
             level_generator.ResetBlocksList();
             level_generator.CreateLevelLogic(Screen.getHeight(), Screen.getWidth());
         }
@@ -111,21 +112,27 @@ namespace ztp_game.States
         {
             if (save != null && !newGame)
             {
+                Console.WriteLine("PICK MEMENTO: " + save.GetPick());
                 level_generator.level_array = save.GetLevelArray();
                 _champ.level = save.GetLevel();
                 _champ.ResetValues();
                 _champ.points = save.GetPoints();
                 _champ.health = save.GetHealth();
                 _champ.Velocity = save.GetVelocity();
+                _champ.Speed = save.GetSpeed();
                 _champ.Position = save.GetPosition();
                 _champ.ChangeDirection(save.GetDirection());
+                pick = save.GetPick();
+                level_generator.setPick(pick);
                 level_generator.BuildLevel(Screen.getHeight(), Screen.getWidth());
             }
         }
 
+
         public SaveMemento Save()
         {
-            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection());
+            return new SaveMemento(level_generator.level_array, _champ.points, _champ.level, _champ.health, _champ.Velocity, _champ.Position, _champ.GetDirection(), pick, _champ.Speed);
+
         }
     }
 }

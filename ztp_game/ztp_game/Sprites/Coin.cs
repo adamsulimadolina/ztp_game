@@ -8,9 +8,6 @@ namespace ztp_game.Sprites
 {
     public class Coin: Sprite
     {
-        public void Animate()
-        {
-
-        }
+       
     }
 }

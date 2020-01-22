@@ -18,8 +18,10 @@ namespace ztp_game.Memento
         private Vector2 velocity;
         private Vector2 position;
         private Direction direction;
+        private int pick;
+        private float speed;
 
-        public SaveMemento(char[,] levelArray, int points, int level, int health, Vector2 velocity, Vector2 position, Direction direction)
+        public SaveMemento(char[,] levelArray, int points, int level, int health, Vector2 velocity, Vector2 position, Direction direction, int pick, float speed)
         {
             this.levelArray = levelArray;
             this.points = points;
@@ -28,6 +30,8 @@ namespace ztp_game.Memento
             this.velocity = velocity;
             this.position = position;
             this.direction = direction;
+            this.pick = pick;
+            this.speed = speed;
         }
 
         public char[,] GetLevelArray()
@@ -63,6 +67,16 @@ namespace ztp_game.Memento
         public Direction GetDirection()
         {
             return direction;
+        }
+
+        public int GetPick()
+        {
+            return pick;
+        }
+
+        public float GetSpeed()
+        {
+            return speed;
         }
 
     }

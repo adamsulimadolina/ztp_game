@@ -18,6 +18,7 @@ namespace ztp_game.States
         public RankingState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             var buttonTexture = _content.Load<Texture2D>("Components/Button");
+
             var buttonFont = _content.Load<SpriteFont>("Components/Font");
             _font = buttonFont;
 

@@ -20,7 +20,7 @@ namespace ztp_game.TemplateMethod
             this.content = content;
             this.blockList = new List<BlocksList>();
         }
-        public override char[,] CreateBlocks(int height, int width)
+        protected override char[,] CreateBlocks(int height, int width)
         {
             Random rnd = new Random();
             List<bool> blockDirection = new List<bool> { true, false };
@@ -103,7 +103,7 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateCoins(int height, int width)
+        protected override char[,] CreateCoins(int height, int width)
         {
             Random rnd = new Random();
 
@@ -124,7 +124,7 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateGaps(int height, int width)
+        protected override char[,] CreateGaps(int height, int width)
         {
             Random rnd = new Random();
             int length = 0;
@@ -141,7 +141,7 @@ namespace ztp_game.TemplateMethod
                 {
                     isGapRoll = rnd.Next(1, 100);
 
-                    length = rnd.Next(2, 5);
+                    length = rnd.Next(3, 5);
 
                     if (wasGap == true)
                     {
@@ -181,12 +181,12 @@ namespace ztp_game.TemplateMethod
 
             foreach (BlocksList b in this.blockList) //sprite lista
             {
-
+                
                 while (j < b.getStartX() - 1)
                 {
                     isGapRoll = rnd.Next(1, 100);
 
-                    length = rnd.Next(2, 5);
+                    length = rnd.Next(3, 5);
 
                     if (wasGap == true)
                     {
@@ -221,12 +221,12 @@ namespace ztp_game.TemplateMethod
         }
 
 
-        public override char[,] CreateThorns(int height, int width)
+        protected override char[,] CreateThorns(int height, int width)
         {
             return this.level_array;
         }
 
-        public override char[,] CreateBorder(int height, int width)
+        protected override char[,] CreateBorder(int height, int width)
         {
             for(int i = 0; i< height; i++)
             {
@@ -243,11 +243,10 @@ namespace ztp_game.TemplateMethod
 
         public override void BuildLevel(int height, int width)
         {
-            Champion.GetInstance().SetCollection(sprite_collection);
             char sign = ' ';
-            int pick = PickColorToBuild();
             board_builder = new MagmaLevelBuilder(this.content);
-            if(pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (pick == 1) board_builder = new IceLevelBuilder(this.content);
+            if (pick == 2) board_builder = new JungleLevelBuilder(this.content);
 
             board_builder.GenerateBackground();
             for(int i = 0; i < height; i++)

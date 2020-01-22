@@ -9,7 +9,7 @@ namespace ztp_game.Strategy
 {
     class WAVSoundsStrategy : ISoundStrategy
     {
-        List<SoundEffect> soundsList;
+        public List<SoundEffect> soundsList;
         public string name;
         private SoundEffect sound;
 
@@ -23,8 +23,7 @@ namespace ztp_game.Strategy
             soundsList = soundFilesList;
         }
 
-
-            public void PlayFile()
+        public void PlayFile()
         {
             sound = soundsList.Find(x => x.Name == name);
             sound.CreateInstance().Play();

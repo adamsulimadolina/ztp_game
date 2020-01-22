@@ -8,9 +8,5 @@ namespace ztp_game.Sprites
 {
     public class Door: Sprite
     {
-        public void AnimateOnTouch()
-        {
-
-        }
     }
 }

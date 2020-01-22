@@ -86,11 +86,8 @@ namespace ztp_game.Logic
             return (ConsoleColor)color.GetValue(rnd.Next(color.Length));
         }
 
-        
         public static void DisplayMenu(int position)
         {
-            //music.StopMusic();
-            //Console.Clear();
             Console.CursorVisible = false;
 
             Console.BackgroundColor = ConsoleColor.Black;
@@ -140,8 +137,6 @@ namespace ztp_game.Logic
             }
 
         }
-
-       
 
         public class ScreenColor
         {
@@ -220,11 +215,6 @@ namespace ztp_game.Logic
             }
         }
 
-
-
-
-
-        
         public static void DisplayCredits()
         {
             string name1 = "Adam Sulima Dolina", name2 = "Michał Szorc", name3 = "Piotr Awramiuk";
@@ -255,6 +245,5 @@ namespace ztp_game.Logic
                 Console.WriteLine();
             }
         }
-
     }
 }

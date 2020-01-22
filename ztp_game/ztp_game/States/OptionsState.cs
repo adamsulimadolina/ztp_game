@@ -56,17 +56,11 @@ namespace ztp_game.States
                 soundVolumeButton,
                 backButton,
             });
-            //navigationMenu = new NavigationMenu(new List<Button>
-            //{
-            //    backButton,
-            //});
-
 
             _components = new List<Component>()
             {
                 background,
                 navigationMenu,
-                //navigationMenu
             };
         }
 
@@ -96,11 +90,13 @@ namespace ztp_game.States
         }
 
 
+
         public override void Update(GameTime gameTime)
         {
             foreach (var component in _components)
                 component.Update(gameTime);
         }
+
 
     }
 }

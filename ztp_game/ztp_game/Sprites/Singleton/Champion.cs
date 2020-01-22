@@ -172,7 +172,9 @@ namespace ztp_game.Sprites
             
             SetPositionStart();
             this.health--;
+
             Speed = startingSpeed + level * 2 ;
+
             soundManager.PlaySound("death");
             if (!specialLevel)
             {

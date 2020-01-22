@@ -12,7 +12,7 @@ namespace ztp_game.Sprites
         {
             Magma,
             Ice,
-            Normal
+            Jungle
         }
 
         public LevelType level_type;
